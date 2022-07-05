@@ -1,0 +1,37 @@
+Core
+
+Sistema de Agencia de Empregos
+
+cadastros
+
+	cadastro usuario
+
+	cadastro empresa
+
+rotina 
+	aplicar-se a vaga
+
+relatorios
+
+	empregadores
+
+	funcionários 
+	
+
+
+Possiveis Funcoes
+
+interface 
+ 	menu
+	posicao
+	caixa
+	cores
+cliente
+	mostrar tela
+	limpar
+	sobrescrever
+	acessar
+	empresa
+	pessoa
+
+
