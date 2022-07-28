@@ -1,23 +1,24 @@
 #ifndef CADASTRO_H_INCLUDED
 #define CADASTRO_H_INCLUDED
+#include "interface.h"
 
 typedef struct{
     int Codigo;
     char Nome[51];
     char Telefone[21];
-    double Limite;
 } Cliente;
 
-void MostrarTelaCliente(int z);   //  Protótipo ou assinatura função
-Cliente DigitarCliente();
-void MostrarCliente(Cliente C, int z);
-void LimparCliente(int z);
-void ListarClientes(Cliente Clientes[], int Quantidade, int z);
-void PesquisarCliente(Cliente Clientes[], int Quantidade);
-void AtivarCliente(int z);
 
-void InserirCliente(int Codigo, char Nome[], char Telefone[], double Limite);
-int CarregarClientes(char Texto[][20]);
+Cliente DigitarCliente(Tema t);
+void ListarClientes(Cliente PouE[], int Quantidade, Tema t);
+void PesquisarCliente(Cliente PouE[], int Quantidade, Tema t);
+
+void AtivarCliente(Tema t);
+void AtivarCliente2(Tema t);
+
+
+void InserirCliente(int Codigo, char Nome[], char Telefone[]);
+void InserirEmpresa(int Codigo, char Nome[], char Telefone[]);
 
 
 #endif // CADASTRO_H_INCLUDED

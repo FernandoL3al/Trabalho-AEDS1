@@ -2,21 +2,29 @@ Core
 
 Sistema de Agencia de Empregos
 
-cadastros
+cliente
 
-	cadastro usuario
+	pessoa> cadastrar pessoa
 
-	cadastro empresa
+	empresa > cadastrar empresa
 
-rotina 
-	aplicar-se a vaga
+vaga
+	cadastrar vaga
 
-relatorios
+	vaga > listar vagas
 
-	empregadores
+	pesquisar vaga  >  selecionar vaga
 
-	funcionários 
-	
+
+
+
+
+
+
+
+
+
+
 
 
 Possiveis Funcoes

@@ -3,120 +3,118 @@
 #include <string.h>
 #include "interface.h"
 #include "cadastro.h"
+Cliente Pessoas[100]; int ContPessoas = 0 ;
+Cliente Empresas[100];  int ContEmpresas = 0;
 
-Cliente Clientes[100];
-int ContClientes = 0 , z = 3;
 
-void InserirCliente(int Codigo, char Nome[], char Telefone[], double Limite){
-    Clientes[ContClientes].Codigo = Codigo;
-    strcpy(Clientes[ContClientes].Nome, Nome);
-    strcpy(Clientes[ContClientes].Telefone, Telefone);
-    Clientes[ContClientes].Limite = Limite;
-    ContClientes++;
+void InserirCliente(int Codigo, char Nome[], char Telefone[]){
+    Pessoas[ContPessoas].Codigo = Codigo;
+    strcpy(Pessoas[ContPessoas].Nome, Nome);
+    strcpy(Pessoas[ContPessoas].Telefone, Telefone);
+    ContPessoas++;
 }
 
-void MostrarTelaCliente(int z){
-
-    Cores(MenuCor(z),BLACK);
-    Caixa(21, 6, 75, 12, 0);
-    LinCol(22,  7); printf("============================= Cadastro de Clientes ========================");
-    LinCol(22,  8); printf("             Codigo:   ");
-    LinCol(22,  9); printf("             Nome:     ");
-    LinCol(22, 10); printf("             Telefone: ");
-    LinCol(22, 11); printf("             Limite:   ");
-    LinCol(22, 12); printf("===========================================================================");
+void InserirEmpresa(int Codigo, char Nome[], char Telefone[]){
+    Empresas[ContEmpresas].Codigo = Codigo;
+    strcpy(Empresas[ContEmpresas].Nome, Nome);
+    strcpy(Empresas[ContEmpresas].Telefone, Telefone);
+    ContEmpresas++;
 }
-Cliente DigitarCliente(int z){
+
+
+Cliente DigitarCliente(Tema t){
     Cliente C;
-    Cores(MenuCor(z),BLACK);
-    Caixa(21, 6, 75, 12, 0);
-    LinCol(22,  7); printf("============================= Cadastro de Clientes ========================");
-    LinCol(22,  8); printf("             Codigo:   ");LinCol(46,  8); scanf("%d", &C.Codigo);
-    LinCol(22,  9); printf("             Nome:     ");LinCol(46,  9); scanf(" %[^\n]", C.Nome);
-    LinCol(22, 10); printf("             Telefone: ");LinCol(46, 10); scanf(" %[^\n]", C.Telefone);
-    LinCol(22, 11); printf("             Limite:   ");LinCol(46, 11); scanf("%lf", &C.Limite);
-    LinCol(22, 12); printf("===========================================================================");
+    Cores(t.fundo, t.letra); Caixa(0, 0, 118, 28, 1);
+    Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
+    Cores(t.fundo, t.letra); Caixa(24, 1, 70, 1, 0);
+    Cores(t.letra, t.fundo);
+    Gotoxy(27,2); printf("                       Cadastro de Cliente                       ");
+    Gotoxy(22,  7); printf("C%cdigo:....................................................................", 162);
+    Gotoxy(22,  11);printf("Nome:......................................................................"); 
+    Gotoxy(22, 15); printf("Telefone:..................................................................."); 
+    Gotoxy(35,  7); scanf("%d", &C.Codigo) ; Gotoxy(35, 11); scanf(" %[^\n]", C.Nome); Gotoxy(35, 15); scanf(" %[^\n]", C.Telefone);
     return C;
 }
 
-void MostrarCliente(Cliente C, int z){
-    Cores(MenuCor(z),BLACK);
-    Caixa(21, 6, 75, 12, 0);
-    LinCol(22,  7); printf("%d", C.Codigo);
-    LinCol(22,  9); printf("%s", C.Nome);
-    LinCol(22, 11); printf("%s", C.Telefone);
-    LinCol(22, 13); printf("%.2lf", C.Limite);
-}
-void LimparCliente(int z){
-    Cores(MenuCor(z),BLACK);
-    Caixa(21, 6, 75, 12, 0);
-    LinCol(22,  7); printf("%*s", 10, " ");
-    LinCol(22,  9); printf("%*s", 60, " ");
-    LinCol(22, 11); printf("%*s", 40, " ");
-    LinCol(22, 13); printf("%*s", 20, " ");
-}
-void ListarClientes(Cliente Clientes[], int Quantidade, int z){
-    Cores(MenuCor(z),BLACK);
-    Caixa(21, 6, 75, 12, 0);
-    int i;
-    system("cls");
-    printf("Lista de Clientes\n");
-    printf("============================================================================");
+void ListarClientes(Cliente PouE[], int Quantidade, Tema t){
+    Cores(t.fundo,t.letra); Caixa(0, 0, 118, 28, 1);
+    Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
+    Cores(t.fundo, t.letra); Caixa(24, 1, 70, 1, 0);
+    Cores(t.letra, t.fundo);
+    
+    Gotoxy(27,2); printf("                              Lista                             ");
+    for(int i = 0; i < Quantidade; i++){
+        Gotoxy(24, 7 + i);
+        printf("%8d %-42s %-14s", PouE[i].Codigo,
+              PouE[i].Nome, PouE[i].Telefone);
+    }               
+    Gotoxy(24,  5); printf("C%cdigo   Nome                                       Telefone        \n", 162);
+    Gotoxy(24, 6); printf("-------- ------------------------------------------ -------------- \n");
+    Gotoxy(24, 21); printf("                            %d Cadastros                                   \n", Quantidade);
 
-    printf("============================================================================\n\n");
-    printf("Codigo Nome                                   Telefone       Limite\n");
-    printf("------ -------------------------------------- -------------- ----------\n");
-    for(i = 0; i < Quantidade; i++){
-        printf("%6d %-38s %-14s %10.2lf\n", Clientes[i].Codigo,
-              Clientes[i].Nome, Clientes[i].Telefone,
-              Clientes[i].Limite);
-    }
-    printf("============================================================================\n\n");
-    printf("%d Clientes Cadastrados\n", Quantidade);
-    system("pause");
+                    
 }
-void PesquisarCliente(Cliente Clientes[], int Quantidade){
-    Cores(MenuCor(z),BLACK);
-    Caixa(21, 6, 75, 12, 0);
+
+
+void PesquisarCliente(Cliente PouE[], int Quantidade, Tema t){
     int i, Codigo;
-    LinCol(22,  7); scanf("%d", &Codigo);
-    for(i = 0; i < Quantidade; i++){
-        if(Clientes[i].Codigo == Codigo){
-            MostrarCliente(Clientes[i], z);
-            LinCol(10, 19);
+    Cores(t.fundo, t.letra); Caixa(0, 0, 118, 28, 1);
+    Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
+    Cores(t.fundo, t.letra); Caixa(24, 1, 70, 1, 0);
+    Cores(t.letra, t.fundo);
+    Gotoxy(27,2); printf("                              Pesquisa                          ");
+    Gotoxy(46,  7); printf("Digite o C%cdigo: ", 162); Gotoxy(63, 7); scanf("%d", &Codigo);
+    for(int i = 0; i < Quantidade; i++){
+        if(Codigo == PouE[i].Codigo){
+            Gotoxy(24, 8); printf("C%cdigo   Nome                                       Telefone        \n", 162);
+            Gotoxy(24, 9); printf("-------- ------------------------------------------ -------------- \n");
+             Gotoxy(24, 10);
+            printf("%8d %-42s %-14s", PouE[i].Codigo,
+                 PouE[i].Nome, PouE[i].Telefone);
+            Gotoxy(39, 19);
             system("pause");
             return;
         }
-    }
-    LinCol(22, 15);
-    printf("Cliente nao Cadastrado                 \n");
+    }               
+    Caixa(44, 14 , 30 , 1, 1);
+    Gotoxy(46, 15);
+    printf("   Cliente n%co Cadastrado   \n", 198);
+    Gotoxy(39, 19);
     system("pause");
 }
 
-void AtivarCliente(int z){
+void AtivarCliente(Tema t){
     int Opcao;
+    int x[] = {36,56,82};
+    int y[] = {24,24,24};
+    char sla[][20] = {"Novo", "Pesquisar", "Sair"};
     do{
         system("cls");
-        MostrarTelaCliente(z);
-        LinCol(22,18);
-        printf("1- Novo, 2- Pesquisar, ");
-        printf("3- Listar, 0- Sair :        ");
-        LinCol(70, 18);
-        scanf("%d", &Opcao);
-        LimparCliente(z);
+        ListarClientes(Pessoas, ContPessoas, t);
+        Cores(t.fundo, t.letra); Caixa(20, 23 , 80, 1, 0); 
+        Opcao = Menu(x, y, sla, 3, t);
+        if(Opcao == 0)
+            Pessoas[ContPessoas++] = DigitarCliente(t);
         if(Opcao == 1)
-            Clientes[ContClientes++] = DigitarCliente(z);
-        if(Opcao == 2)
-            PesquisarCliente(Clientes, ContClientes);
-        if(Opcao == 3)
-            ListarClientes(Clientes, ContClientes, z);
-    } while(Opcao != 0);
+            PesquisarCliente(Pessoas, ContPessoas, t);
+    } while(Opcao != 2);
 }
 
-int CarregarClientes(char Texto[][20]){
-    int i;
-    for(i = 0; i < ContClientes; i++){
-        strcpy(Texto[i], Clientes[i].Nome);
-    }
-    return ContClientes;
+void AtivarCliente2(Tema t){
+    int Opcao;
+    int x[] = {36,56,82};
+    int y[] = {24,24,24};
+    char sla[][20] = {"Novo", "Pesquisar", "Sair"};
+    do{
+        system("cls");
+        ListarClientes(Empresas, ContEmpresas, t);
+        Cores(t.fundo , t.letra); Caixa(20, 23 , 80, 1, 0); 
+        Opcao = Menu(x, y, sla, 3, t);
+        if(Opcao == 0)
+            Empresas[ContEmpresas++] = DigitarCliente(t);
+        if(Opcao == 1)
+            PesquisarCliente(Empresas, ContEmpresas, t);
+    } while(Opcao != 2);
 }
+
+
