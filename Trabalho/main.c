@@ -33,8 +33,8 @@ int main()
     
     Tema Temas[11];
     arq_tema = fopen("temas.txt", "rb");
-    /*
-    if(arq_tema == NULL) {
+    ///*
+    if(arq_tema == NULL) {                          //backup temas.txt
         arq_tema = fopen("temas.txt", "wb"); 
         Tema Temas1[] = {{ .nome = "Night Mode", .letra = 8, .fundo = 0},
                     { .nome = "Bulbasaur", .letra = 0 , .fundo = 2},
@@ -49,8 +49,9 @@ int main()
                     { .nome = "Molusco", .letra = 15, .fundo = 4}};
         fwrite(Temas1, 11*sizeof(Tema),1,arq_tema);
         fclose(arq_tema);
+        exit(1);
     }
-    */
+    //*/
     for(int b = 0 ; b < 11; b++){
         fread(&Temas[b], sizeof(Tema), 1, arq_tema);
     }
@@ -155,59 +156,3 @@ int main()
     system("cls");
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-Tema Temas[] = {{ .nome = "Night Mode", .letra = 8, .fundo = 0},
-                { .nome = "Bulbasaur", .letra = 0 , .fundo = 2},
-                { .nome = "Squirtle", .letra = 0 , .fundo = 3},
-                { .nome = "Charmander", .letra = 0 , .fundo = 4},
-                { .nome = "Ekans", .letra = 0 , .fundo = 5},
-                { .nome = "Pikachu", .letra = 0 , .fundo = 6},
-                { .nome = "Lapras", .letra = 0 , .fundo = 11},
-                { .nome = "Chansey", .letra = 0 , .fundo = 12},
-                { .nome = "Matrix", .letra = 10 , .fundo = 0},
-                { .nome = "Bozo", .letra = 6, .fundo = 2},
-                { .nome = "Molusco", .letra = 15, .fundo = 4}};
-*/

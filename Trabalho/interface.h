@@ -36,6 +36,6 @@ void TipoCursor(int cursor);
 void Inicio(Tema t, int num);
 int EseG(Tema t);
 
-char En_DecriptarSTR(char string[101], int opcao);
+char *EncDec(char palavra[], int num);
 
 #endif // INTERFACE_H_INCLUDED

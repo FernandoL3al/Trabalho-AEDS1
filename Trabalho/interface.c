@@ -108,94 +108,23 @@ void TipoCursor(int cursor){
         }
 }
 
-/* funcao com defeito ainda
-char En_DecriptarSTR(char string[101], int opcao){ //Encriptar/Decriptar String
-    int i;
-    char cripted[101];
-    if(opcao == 1){
-        for(i = 0; i < strlen(string); i++){
-            cripted[i] = string[i] + 3;
-        }
-
-    }
-    if(opcao == 2){
-        for(i = 0; i < strlen(string); i++){
-            cripted[i] = string[i] - 3;
+char *EncDec(char palavra[], int num){ // Funcao de Encriptar/Decriptar string ... necessita passar string por referencia 
+    int i, tam = strlen(palavra);
+    //Encriptar
+    if(num == 1){   
+        for(i = 0; i < tam; i++){
+            if(palavra[i] >= 'D' && palavra[i] <= 'W' || palavra[i] >= 'd' && palavra[i] <= 'w' ) palavra[i] += 3;
         }
     }
-    return cripted;
+    //Decriptar
+    if(num == 2){
+        for(i = 0; i < tam; i++){
+                if(palavra[i] >= 'D' && palavra[i] <= 'W' || palavra[i] >= 'd' && palavra[i] <= 'w' ) palavra[i] -= 3;
+                if(palavra[i] == '@') palavra[i] = ' ';
+        }
+    }
+    return palavra;
 }
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 void Inicio(Tema t, int num){
@@ -233,35 +162,36 @@ void Inicio(Tema t, int num){
         Gotoxy(22,18); printf("--------------------\\  jjjj    oooo   bbbbb   ssssss   /-------------------"); Cores(cdf/*WHITE*/, fundo);
     }
     if(num == 1){
-        Gotoxy(22, 7); printf("                              2222222222222222                             "); Cores(cdf/*LIGHT_RED*/, fundo);
-        Gotoxy(22, 8); printf("                        222222                222222                       "); Cores(cdf/*RED*/, fundo);
-        Gotoxy(22, 9); printf("                   2222222                       2222222                   "); Cores(cdf/*LIGHT_MAGENTA*/, fundo);
-        Gotoxy(22,10); printf("               222222222                           222222222               "); Cores(cdf/*MAGENTA*/, fundo);
-        Gotoxy(22,11); printf("          222222222222     22222222222222222222      222222222222          "); Cores(cdf/*BLUE*/, fundo);
-        Gotoxy(22,12); printf("      2222222222222222222222222222222222222222222222 2222222222222222      "); Cores(cdf/*LIGHT_BLUE*/, fundo);
-        Gotoxy(22,13); printf("   22222222222222222222222222               2222222222222222222222222222   "); Cores(cdf/*CYAN*/, fundo);
-        Gotoxy(22,14); printf("      222222222222222                                2222222222222222      "); Cores(cdf/*LIGHT_CYAN*/, fundo);
-        Gotoxy(22,15); printf("          2222222222222                              2222222222222         "); Cores(cdf/*GREEN*/, fundo);
-        Gotoxy(22,16); printf("                 22222222                          222222222222            "); Cores(cdf/*LIGHT_GREEN*/, fundo);
-        Gotoxy(22,17); printf("                        22222                   2222222                    "); Cores(cdf/*YELLOW*/, fundo);
-        Gotoxy(22,18); printf("                             2222222222222222222                           "); Cores(cdf/*WHITE*/, fundo);
+        Gotoxy(22, 7); Cores(2, 6);printf("                              ");Cores(6,2);printf("2222222222222222");Cores(2,6);printf("                             "); Cores(2, 6);
+        Gotoxy(22, 8); printf("                        ");Cores(6,2);printf("222222");Cores(1,15);printf("2222222222222222");Cores(6,2);printf("222222");Cores(2,6);printf("                       "); Cores(2, 6);
+        Gotoxy(22, 9); printf("                   ");Cores(6,2);printf("2222222");Cores(1,15);printf("22222222222222222222222");;Cores(6,2);printf("2222222");Cores(2,6);printf("                   "); Cores(2, 6);
+        Gotoxy(22,10); printf("               ");Cores(6,2);printf("222222222");Cores(1,15);printf("222222222222222222222222222");Cores(6,2);printf("222222222");Cores(2,6);printf("               "); Cores(2, 6);
+        Gotoxy(22,11); printf("          ");Cores(6,2);printf("222222222222");Cores(1,15);printf("22222");Cores(15,2);printf("22222222222222222222");Cores(1,15);printf("222222");Cores(6,2);printf("222222222222");Cores(2,6);printf("          "); Cores(2, 6);
+        Gotoxy(22,12); printf("      ");Cores(6,2);printf("222222222222222");Cores(1,15);printf("2");Cores(15,2);printf("222222222222222222222222222222");Cores(1,15);printf("2");Cores(6,2);printf("2222222222222222");Cores(2,6);printf("      "); Cores(2, 6);
+        Gotoxy(22,13); printf("   ");Cores(6,2);printf("222222222222222222");Cores(15,2);printf("22222222");Cores(1,15);printf("222222222222222");Cores(15,2);printf("222222222");Cores(6,2);printf("2222222222222222222");Cores(2,6);printf("   "); Cores(2, 6);
+        Gotoxy(22,14); printf("      ");Cores(6,2);printf("222222222222222");Cores(1,15);printf("22222222222222222222222222222222");Cores(6,2);printf("2222222222222222");Cores(2,6);printf("      "); Cores(2, 6);
+        Gotoxy(22,15); printf("          ");Cores(6,2);printf("2222222222222");Cores(1,15);printf("222222222222222222222222222222");Cores(6,2);printf("2222222222222");Cores(2,6);printf("         "); Cores(2, 6);
+        Gotoxy(22,16); printf("                 ");Cores(6,2);printf("22222222");Cores(1,15);printf("22222222222222222222222222");Cores(6,2);printf("222222222222");Cores(2,6);printf("            "); Cores(2, 6);
+        Gotoxy(22,17); printf("                        ");Cores(6,2);printf("22222");Cores(1,15);printf("2222222222222222222");Cores(6,2);printf("2222222");Cores(2,6);printf("                    "); Cores(2, 6);
+        Gotoxy(22,18); printf("                             ");Cores(6,2);printf("2222222222222222222");Cores(2,6);printf("                           "); Cores(2, 6);
 
         Gotoxy(4, 28); printf("     Meus parab%cns , voc%c encontrou nosso easter egg!!! ...     ", 130, 136);
     }
+
     if(num == 2){
-        Gotoxy(22, 7); printf("                                    131313                                 "); Cores(cdf/*LIGHT_RED*/, fundo);
-        Gotoxy(22, 8); printf("                                   13131313                                "); Cores(cdf/*RED*/, fundo);
-        Gotoxy(22, 9); printf("                                  3131313131                               "); Cores(cdf/*LIGHT_MAGENTA*/, fundo);
-        Gotoxy(22,10); printf("             13131313131313131313131313131313131313131313131313            "); Cores(cdf/*MAGENTA*/, fundo);
-        Gotoxy(22,11); printf("                  1313131313         313          1313131313               "); Cores(cdf/*BLUE*/, fundo);
-        Gotoxy(22,12); printf("                      131313 31313131 1313131 1313131313                   "); Cores(cdf/*LIGHT_BLUE*/, fundo);
-        Gotoxy(22,13); printf("                          13 31313131 1313131 131313                       "); Cores(cdf/*CYAN*/, fundo);
-        Gotoxy(22,14); printf("                          13        131313131 131313                       "); Cores(cdf/*LIGHT_CYAN*/, fundo);
-        Gotoxy(22,15); printf("                        1313 3131313131313131 13131313                     "); Cores(cdf/*GREEN*/, fundo);
-        Gotoxy(22,16); printf("                      313131 1313131313131333 3131313131                   "); Cores(cdf/*LIGHT_GREEN*/, fundo);
-        Gotoxy(22,17); printf("                    131313131313              131313131313                 "); Cores(cdf/*YELLOW*/, fundo);
-        Gotoxy(22,18); printf("                  13131313                         131313131               "); Cores(cdf/*WHITE*/, fundo);
-    
+        Gotoxy(22, 7); printf("                                    ");Cores(4,15);printf("131313");Cores(15,4);printf("                                 "); Cores(cdf/*LIGHT_RED*/, fundo);
+        Gotoxy(22, 8); printf("                                   ");Cores(4,15);printf("13131313");Cores(15,4);printf("                                "); Cores(cdf/*RED*/, fundo);
+        Gotoxy(22, 9); printf("                                  ");Cores(4,15);printf("3131313131");Cores(15,4);printf("                               "); Cores(cdf/*LIGHT_MAGENTA*/, fundo);
+        Gotoxy(22,10); printf("             ");Cores(4,15);printf("13131313131313131313131313131313131313131313131313");Cores(15,4);printf("            "); Cores(cdf/*MAGENTA*/, fundo);
+        Gotoxy(22,11); printf("                  ");Cores(4,15);printf("1313131313");Cores(15,4);printf("         ");Cores(4,15);printf("313");Cores(15,4);printf("          ");Cores(4,15);printf("1313131313");Cores(15,4);printf("               "); Cores(cdf/*BLUE*/, fundo);
+        Gotoxy(22,12); printf("                      ");Cores(4,15);printf("131313");Cores(15,4);printf(" ");Cores(4,15);printf("31313131");Cores(15,4);printf(" ");Cores(4,15);printf("1313131");Cores(15,4);printf(" ");Cores(4,15);printf("1313131313");Cores(15,4);printf("                   "); Cores(cdf/*LIGHT_BLUE*/, fundo);
+        Gotoxy(22,13); printf("                          ");Cores(4,15);printf("13");Cores(15,4);printf(" ");Cores(4,15);printf("31313131");Cores(15,4);printf(" ");Cores(4,15);printf("1313131");Cores(15,4);printf(" ");Cores(4,15);printf("131313");Cores(15,4);printf("                       "); Cores(cdf/*CYAN*/, fundo);
+        Gotoxy(22,14); printf("                          ");Cores(4,15);printf("13");Cores(15,4);printf("        ");Cores(4,15);printf("131313131");Cores(15,4);printf(" ");Cores(4,15);printf("131313");Cores(15,4);printf("                       "); Cores(cdf/*LIGHT_CYAN*/, fundo);
+        Gotoxy(22,15); printf("                        ");Cores(4,15);printf("1313");Cores(15,4);printf(" ");Cores(4,15);printf("3131313131313131");Cores(15,4);printf(" ");Cores(4,15);printf("13131313");Cores(15,4);printf("                     "); Cores(cdf/*GREEN*/, fundo);
+        Gotoxy(22,16); printf("                      ");Cores(4,15);printf("313131");Cores(15,4);printf(" ");Cores(4,15);printf("1313131313131333");Cores(15,4);printf(" ");Cores(4,15);printf("3131313131");Cores(15,4);printf("                   "); Cores(cdf/*LIGHT_GREEN*/, fundo);
+        Gotoxy(22,17); printf("                    ");Cores(4,15);printf("131313131313");Cores(15,4);printf("             ");Cores(4,15);printf("3131313131313");Cores(15,4);printf("                 "); Cores(cdf/*YELLOW*/, fundo);
+        Gotoxy(22,18); printf("                  ");Cores(4,15);printf("13131313");Cores(15,4);printf("                         ");Cores(4,15);printf("131313131");Cores(15,4);printf("               "); Cores(cdf/*WHITE*/, fundo);
+        
         Gotoxy(4, 28); printf("     Meus parab%cns , voc%c encontrou nosso easter egg!!! ...     ", 130, 136);
     }
     Cores(fundo, cdf);
