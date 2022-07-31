@@ -26,16 +26,22 @@ Data de Início : 25/06/2022    Término : ??/??/????
 
 
 FILE *arq_tema;
+FILE *arq_empresa;
+FILE *arq_pessoa;
 
-int main()
-{   
+
+int main(){
+
+   
+    Cliente Pessoas[100], Empresas[100];  
+    int ContPessoas = 0, ContEmpresas = 0;
     //Leitura do arquivo de temas;
     
     Tema Temas[11];
     arq_tema = fopen("temas.txt", "rb");
     ///*
     if(arq_tema == NULL) {                          //backup temas.txt
-        arq_tema = fopen("temas.txt", "wb"); 
+        arq_tema = fopen("temas.txt", "w+b"); 
         Tema Temas1[] = {{ .nome = "Night Mode", .letra = 8, .fundo = 0},
                     { .nome = "Bulbasaur", .letra = 0 , .fundo = 2},
                     { .nome = "Squirtle", .letra = 0 , .fundo = 3},
@@ -47,11 +53,10 @@ int main()
                     { .nome = "Matrix", .letra = 10 , .fundo = 0},
                     { .nome = "Bozo", .letra = 6, .fundo = 2},
                     { .nome = "Molusco", .letra = 15, .fundo = 4}};
-        fwrite(Temas1, 11*sizeof(Tema),1,arq_tema);
-        fclose(arq_tema);
-        exit(1);
+        fwrite(Temas1, sizeof(Tema), 11, arq_tema);
     }
     //*/
+    fseek(arq_tema, 0, SEEK_SET);
     for(int b = 0 ; b < 11; b++){
         fread(&Temas[b], sizeof(Tema), 1, arq_tema);
     }
@@ -62,26 +67,24 @@ int main()
     //Default Tema
     Tema z = Temas[2];
 
-
-
-    // inserindo dados
-    InserirCliente(100, "Joao", "234234-245");
-    InserirCliente(101, "Jose", "56756-43950");
-    InserirCliente(13, "Lulosvaldo", "131313-1313");
-    InserirCliente(102, "Maria", "3453-3585");
-    InserirCliente(103, "Barbara", "0899-4456");
-    InserirCliente(22, "Jao Bozonaro", "222222-222");
-    InserirCliente(104, "Luiza", "12223-34985");
-
-    InserirEmpresa(002, "Yourbank", "1414989375");
-    InserirEmpresa(023, "Microloft", "1374-75701");
-    InserirEmpresa(013, "Akazon", "153764-356");
-    InserirEmpresa(233, "Kabaum", "53056-9436");
-    InserirEmpresa(453, "Groogue", "1958-544");
-
+    //CarregarCliente(Empresas, Pessoas, &ContEmpresas, &ContPessoas, arq_empresa, arq_pessoa);
+    
+    arq_empresa = fopen("empresas.txt", "rb+");
+    if(arq_empresa == NULL){
+        Default(arq_empresa, 1);
+        arq_empresa = fopen("empresas.txt", "rb+");
+    }
+    Carregar(Empresas, &ContEmpresas, arq_empresa);
+    arq_pessoa = fopen("pessoas.txt", "rb+");
+    if(arq_pessoa == NULL){
+        Default(arq_pessoa, 2);
+        arq_pessoa = fopen("pessoas.txt", "rb+");
+    }
+    Carregar(Pessoas, &ContPessoas, arq_pessoa);
     do{
         system("cls");
-
+        Leitura(arq_empresa, Empresas, "empresas.txt");
+        Leitura(arq_pessoa, Pessoas, "pessoas.txt");
         //Inicio tela principal
         if(strcmp(z.nome, Temas[9].nome) == 0) Inicio(z, 1);
         else if(strcmp(z.nome, Temas[10].nome) == 0) Inicio(z, 2);
@@ -118,16 +121,16 @@ int main()
         if(Opcao == 0){
              Caixa(24, 5, 15, 2, 1);
              Opcao1 = Menu(x1, y1, OpcoesCad, 2, z);
-             if(Opcao1 == 0) AtivarCliente(z);
-             if(Opcao1 == 1) AtivarCliente2(z);
+             if(Opcao1 == 0) AtivarCliente(z, Pessoas, ContPessoas, arq_pessoa);
+             if(Opcao1 == 1) AtivarCliente(z, Empresas, ContEmpresas, arq_empresa);
         }
 
         // Vagas
         if(Opcao == 1) {
              Caixa(24, 5, 20, 2, 1);
              //Opcao1 = Menu();
-             if(Opcao1 == 0);
-             if(Opcao1 == 1);
+             if(Opcao1 == 0){};
+             if(Opcao1 == 1){};
         }
 
         // Temas
@@ -142,6 +145,8 @@ int main()
 
         }
     } while (Opcao != 3);
+    fclose(arq_empresa);
+    fclose(arq_pessoa);
     system("cls");
     
     // Mensagem de final de programa

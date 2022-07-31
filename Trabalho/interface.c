@@ -108,6 +108,8 @@ void TipoCursor(int cursor){
         }
 }
 
+
+
 char *EncDec(char palavra[], int num){ // Funcao de Encriptar/Decriptar string ... necessita passar string por referencia 
     int i, tam = strlen(palavra);
     //Encriptar
@@ -145,21 +147,21 @@ void Inicio(Tema t, int num){
     Cores(fundo, cdf); 
     Caixa(19, 5 , 79, 14, 1);
     Caixa(21, 6, 75, 12, 0);
-    Cores(cdf/*YELLOW*/, fundo);
 
     if(num == 0){
-        Gotoxy(22, 7); printf("UUUUUUUUUUUUUUUUU   / 00           00000111    0       \\  UUUUUUUUUUUUUUUUU"); Cores(cdf/*LIGHT_RED*/, fundo);
-        Gotoxy(22, 8); printf("     uuuuuuuuuu     | 001        000001000    111      |    uuuuuuuuuu     "); Cores(cdf/*RED*/, fundo);
-        Gotoxy(22, 9); printf(" *    UUUUUUUUU     | 010        001         100 00    |    UUUUUUUUU    * "); Cores(cdf/*LIGHT_MAGENTA*/, fundo);
-        Gotoxy(22,10); printf("~~  *   uuuuuuuu    | 011        000001010  100   01   |   uuuuuuuu   *  ~~"); Cores(cdf/*MAGENTA*/, fundo);
-        Gotoxy(22,11); printf("~~~~  *     UUUUUU  | 100        011       0000010010  | UUUUUU     *  ~~~~"); Cores(cdf/*BLUE*/, fundo);
-        Gotoxy(22,12); printf("~~~~~~~~~~ *   uuuuu| 000000101  100      100      011 |uuuuu  *  ~~~~~~~~~"); Cores(cdf/*LIGHT_BLUE*/, fundo);
-        Gotoxy(22,13); printf("~~~~~~~~~~~~~~  *   u 0000000110 101     100        100u   *  ~~~~~~~~~~~~~"); Cores(cdf/*CYAN*/, fundo);
-        Gotoxy(22,14); printf("~~~~~~~~~~~~~~~~~~~ |     jj   oooo   bbbbb   ssssss   | ~~~~~~~~~~~~~~~~~~"); Cores(cdf/*LIGHT_CYAN*/, fundo);
-        Gotoxy(22,15); printf("------------------- |     jj ooo  ooo bb  bb sss       | ------------------"); Cores(cdf/*GREEN*/, fundo);
-        Gotoxy(22,16); printf("------------------- |     jj oo    oo bbbbb    sssss   | ------------------"); Cores(cdf/*LIGHT_GREEN*/, fundo);
-        Gotoxy(22,17); printf("------------------- | jj  jj ooo  ooo bb  bb      sss  | ------------------"); Cores(cdf/*YELLOW*/, fundo);
-        Gotoxy(22,18); printf("--------------------\\  jjjj    oooo   bbbbb   ssssss   /-------------------"); Cores(cdf/*WHITE*/, fundo);
+        Cores(/*0,6*/cdf, fundo);
+        Gotoxy(22, 7); printf("UUUUUUUUUUUUUUUUU   / 00           00000111    0       \\  UUUUUUUUUUUUUUUUU"); Cores(/*0,12*/cdf, fundo);
+        Gotoxy(22, 8); printf("     uuuuuuuuuu     | 001        000001000    111      |    uuuuuuuuuu     "); Cores(/*0,4*/cdf, fundo);
+        Gotoxy(22, 9); printf(" *    UUUUUUUUU     | 010        001         100 00    |    UUUUUUUUU    * "); Cores(/*0,13*/cdf, fundo);
+        Gotoxy(22,10); printf("~~  *   uuuuuuuu    | 011        000001010  100   01   |   uuuuuuuu   *  ~~"); Cores(/*0,5*/cdf, fundo);
+        Gotoxy(22,11); printf("~~~~  *     UUUUUU  | 100        011       0000010010  | UUUUUU     *  ~~~~"); Cores(/*0,1*/cdf, fundo);
+        Gotoxy(22,12); printf("~~~~~~~~~~ *   uuuuu| 000000101  100      100      011 |uuuuu  *  ~~~~~~~~~"); Cores(/*0,9*/cdf, fundo);
+        Gotoxy(22,13); printf("~~~~~~~~~~~~~~  *   u 0000000110 101     100        100u   *  ~~~~~~~~~~~~~"); Cores(/*0,3*/cdf, fundo);
+        Gotoxy(22,14); printf("~~~~~~~~~~~~~~~~~~~ |     jj   oooo   bbbbb   ssssss   | ~~~~~~~~~~~~~~~~~~"); Cores(/*0,11*/cdf, fundo);
+        Gotoxy(22,15); printf("------------------- |     jj ooo  ooo bb  bb sss       | ------------------"); Cores(/*0,2*/cdf, fundo);
+        Gotoxy(22,16); printf("------------------- |     jj oo    oo bbbbb    sssss   | ------------------"); Cores(/*0,10*/cdf, fundo);
+        Gotoxy(22,18); printf("--------------------\\  jjjj    oooo   bbbbb   ssssss   /----- --------------"); Cores(/*0,15*/cdf, fundo);
+        Gotoxy(22,17); printf("------------------- | jj  jj ooo  ooo bb  bb      sss  | ------------------"); Cores(/*0,14*/cdf, fundo);
     }
     if(num == 1){
         Gotoxy(22, 7); Cores(2, 6);printf("                              ");Cores(6,2);printf("2222222222222222");Cores(2,6);printf("                             "); Cores(2, 6);
