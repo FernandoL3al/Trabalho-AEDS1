@@ -1,21 +1,20 @@
 /*
-Compilaçao manual:
-gcc main.c interface.c cadastro.c funcionario.c produto.c venda.c -o T.exe
-
-Unimontes - Montes Claros - Sistemas de Informação - Primeiro Período
-Trabalho de AEDS 1
-Tema : Sistema de Agência de Empregos
-Professor : Heveraldo
-
-Alunos : Luis Fernando e Arthur
-Programa : LFA jobs v1.0
-
-Data de Início : 25/06/2022    Término : ??/??/????
-
-
+*
+*                           Compilaçao manual:
+*           gcc main.c interface.c cadastro.c funcionario.c produto.c venda.c -o T.exe
+*
+*           Unimontes - Montes Claros - Sistemas de Informação - Primeiro Período
+*           Trabalho de AEDS 1
+*           Tema : Sistema de Agência de Empregos
+*           Professor : Heveraldo
+*
+*           Alunos : Luis Fernando e Arthur
+*           Programa : LFA jobs v1.0
+*
+*           Data de Início : 25/06/2022    Término : ??/??/????
+*
+*
 */
-
-
 
 
 #include <stdio.h>
@@ -25,89 +24,76 @@ Data de Início : 25/06/2022    Término : ??/??/????
 #include "interface.h"
 
 
+//                          CRIACAO PONTEIROS DE ARQUIVO
+//=====================================================================================================
 FILE *arq_tema;
 FILE *arq_empresa;
 FILE *arq_pessoa;
 
 
+//                                  MAIN
+//=====================================================================================================
 int main(){
 
-   
-    Cliente Pessoas[100], Empresas[100];  
-    int ContPessoas = 0, ContEmpresas = 0;
-    //Leitura do arquivo de temas;
-    
+    //                     LEITURA DO ARQUIVO TEMAS
+    //==================================================================
     Tema Temas[11];
-    arq_tema = fopen("temas.txt", "rb");
-    ///*
-    if(arq_tema == NULL) {                          //backup temas.txt
-        arq_tema = fopen("temas.txt", "w+b"); 
-        Tema Temas1[] = {{ .nome = "Night Mode", .letra = 8, .fundo = 0},
-                    { .nome = "Bulbasaur", .letra = 0 , .fundo = 2},
-                    { .nome = "Squirtle", .letra = 0 , .fundo = 3},
-                    { .nome = "Charmander", .letra = 0 , .fundo = 4},
-                    { .nome = "Ekans", .letra = 0 , .fundo = 5},
-                    { .nome = "Pikachu", .letra = 0 , .fundo = 6},
-                    { .nome = "Lapras", .letra = 0 , .fundo = 11},
-                    { .nome = "Chansey", .letra = 0 , .fundo = 12},
-                    { .nome = "Matrix", .letra = 10 , .fundo = 0},
-                    { .nome = "Bozo", .letra = 6, .fundo = 2},
-                    { .nome = "Molusco", .letra = 15, .fundo = 4}};
-        fwrite(Temas1, sizeof(Tema), 11, arq_tema);
-    }
-    //*/
-    fseek(arq_tema, 0, SEEK_SET);
-    for(int b = 0 ; b < 11; b++){
-        fread(&Temas[b], sizeof(Tema), 1, arq_tema);
-    }
-    fclose(arq_tema);
+    TemaLoad(arq_tema, Temas);
 
-    //Menus
+    //                     MENUS
+    //==================================================================
     int Opcao, Opcao1;
-    //Default Tema
+
+    //                    DEFAULT TEMA
+    //==================================================================
     Tema z = Temas[2];
 
-    //CarregarCliente(Empresas, Pessoas, &ContEmpresas, &ContPessoas, arq_empresa, arq_pessoa);
-    
+    //                 LER/CRIAR ARQUIVOS
+    //==================================================================
     arq_empresa = fopen("empresas.txt", "rb+");
     if(arq_empresa == NULL){
         Default(arq_empresa, 1);
         arq_empresa = fopen("empresas.txt", "rb+");
     }
-    Carregar(Empresas, &ContEmpresas, arq_empresa);
     arq_pessoa = fopen("pessoas.txt", "rb+");
     if(arq_pessoa == NULL){
         Default(arq_pessoa, 2);
         arq_pessoa = fopen("pessoas.txt", "rb+");
     }
-    Carregar(Pessoas, &ContPessoas, arq_pessoa);
+    fclose(arq_empresa); fclose(arq_pessoa);
+
+
+    //                   LOOP PROGRAMA
+    //==================================================================
     do{
+
         system("cls");
-        Leitura(arq_empresa, Empresas, "empresas.txt");
-        Leitura(arq_pessoa, Pessoas, "pessoas.txt");
-        //Inicio tela principal
+       
+        //                  INICIO TELA PRINCIPAL
+        //=======================================================
         if(strcmp(z.nome, Temas[9].nome) == 0) Inicio(z, 1);
         else if(strcmp(z.nome, Temas[10].nome) == 0) Inicio(z, 2);
         else Inicio(z, 0);
 
-        // Menu Principal
+        //           COORD/OPC   MENU PRINCIPAL
+        //=======================================================
         int x[] = {34, 49, 64, 79};
         int y[] = {4, 4, 4, 4};
         char Opcoes[][20] = {"Cliente", "Vagas", "Temas", "Sair"};
 
-        //Menu Cliente
+        //           COORD/OPC  MENU CLIENTE
+        //=======================================================
         int x1[] = {25, 25};
         int y1[] = {6, 7};
         char OpcoesCad[][20] = {"Pessoa", "Empresa"};
 
+        //           COORD/OPC   MENU VAGAS
+        //=======================================================
         int x2[] = {};
         int y2[] = {};
 
-        int Of[] = {20, 20};
-        int Of1[] = {9, 10};
-        char OpcoesRotinas[][20] = {"Vendas", ""};
-
-        //Menu Temas
+        //           COORD/OPC   MENU TEMAS
+        //=======================================================
         int xcor[] = {70,70,70,70,70,70,70,70,70};
         int ycor[] = {6,7,8,9,10,11,12,13,14};
         char OpCores[][20] = {"Night Mode","Bulbasaur", "Squirtle",
@@ -117,15 +103,18 @@ int main(){
 
         Opcao = Menu(x, y, Opcoes, 4, z);
 
-        // Cadastro
+        //                    CADASTRO
+        //=======================================================
         if(Opcao == 0){
              Caixa(24, 5, 15, 2, 1);
              Opcao1 = Menu(x1, y1, OpcoesCad, 2, z);
-             if(Opcao1 == 0) AtivarCliente(z, Pessoas, ContPessoas, arq_pessoa);
-             if(Opcao1 == 1) AtivarCliente(z, Empresas, ContEmpresas, arq_empresa);
+             if(Opcao1 == 0) AtivarCliente(z, arq_pessoa, "pessoas.txt");
+             if(Opcao1 == 1) AtivarCliente(z, arq_empresa, "empresas.txt");
+             
         }
 
-        // Vagas
+        //                    VAGAS
+        //=======================================================
         if(Opcao == 1) {
              Caixa(24, 5, 20, 2, 1);
              //Opcao1 = Menu();
@@ -133,7 +122,8 @@ int main(){
              if(Opcao1 == 1){};
         }
 
-        // Temas
+        //                    TEMAS
+        //=======================================================
         if(Opcao == 2){
             Caixa(69, 5, 10, 9, 1);
             Opcao1 = Menu(xcor, ycor, OpCores, 9, z);
@@ -142,21 +132,24 @@ int main(){
             if(Opcao1 == 9){
                 z = Temas[EseG(z)];
             }
-
         }
     } while (Opcao != 3);
-    fclose(arq_empresa);
+
+    fclose(arq_empresa); //precaucao
     fclose(arq_pessoa);
     system("cls");
-    
-    // Mensagem de final de programa
+
+
+    //                   MENSAGEM FINAL
+    //==================================================================
     Cores(z.letra, z.fundo);
     printf("\n\t\t\t  Unimontes - Montes Claros - Sistemas de Inform%c%co - Primeiro Per%codo  \n\t\t\t\t\t\t  Trabalho de AEDS 1  \n\t\t\t\t\t  Tema : Sistema de Ag%cncia de Empregos  \n\t\t\t\t\t\t  Professor : Heveraldo  \n\n\t\t\t\t\t  Alunos : Luis Fernando e Arthur  \n\t\t\t\t\t\t  Programa : LFA jobs v1.0  \n\n\t\t\t\t  Data de In%ccio : 25/06/2022    T%crmino : ?? / ?? / ????  \n\n", 135, 198, 161,136,161,130);
     Cores(z.fundo, z.letra);
     printf("\tN%cs, Fernando e Arthur, agradecemos a voc%c por utilizar nosso software , e pedimos que em caso de qualquer bug   entrem em contato com a gente.\n\n\t\t\t\t\t\tVolte sempre  :)\n\n\t\t\t\t", 162, 136);
     system("pause");
     
-    //Retorno as cores padroes do terminal;
+    //                 RETORNO AO PADRAO DO TERMINAL
+    //==================================================================
     Cores(0,15);
     system("cls");
     return 0;

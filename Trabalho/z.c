@@ -1,8 +1,10 @@
 #include <stdio.h>
-// compila e inicia o programa
+
+//                   COMPILA E INICIA O PROGRAMA
+//=======================================================================
 int main(){
     system("gcc main.c interface.c cadastro.c -o T.exe");
-    printf("DIGITE 's' PARA INICIAR O PROGRAMA: ");
-    if(getch() == 's') system("T.exe");
+    printf("PRESSIONE 'ENTER' PARA INICIAR O PROGRAMA: ");
+    if(getch() == 13) system("T.exe");
     return 0;
 }

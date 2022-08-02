@@ -5,12 +5,17 @@
 #include "interface.h"
 
 
+//                          lINHA COLUNA HVRS
+//=====================================================================================================
 void Gotoxy(int linha, int coluna){
     COORD c;
     c.X = linha; c.Y = coluna;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
 
+
+//                          CAIXA HVRS
+//=====================================================================================================
 void Caixa(int x, int y, int largura, int altura, int tipo){
     int i, j;
     unsigned char C[][6] = {{218, 196, 191, 179, 192, 217},
@@ -28,11 +33,16 @@ void Caixa(int x, int y, int largura, int altura, int tipo){
     printf("%c", C[tipo][5]);
 }
 
+
+//                          CORES LETRAS/FUNDO HVRS
+//=====================================================================================================
 void Cores(int fundo, int letras){
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), letras + (fundo << 4));
 }
 
 
+//                          MENU HVRS(EDITED, TEMAS)
+//=====================================================================================================
 int Menu(int x[], int y[], char Opcoes[][20], int n, Tema t){
     int i, Opcao = 0, tecla;
     TipoCursor(0);
@@ -64,6 +74,9 @@ int Menu(int x[], int y[], char Opcoes[][20], int n, Tema t){
     return -1;
 }
 
+
+//                          lINHA COLUNA HVRS
+//=====================================================================================================
 int GetTecla(){
     int ch;
     ch = getch();
@@ -73,6 +86,9 @@ int GetTecla(){
     return ch;
 }
 
+
+//                          lINHA COLUNA HVRS
+//=====================================================================================================
 void TipoCursor(int cursor){
     HANDLE myconsole = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO CURSOR;
@@ -86,7 +102,38 @@ void TipoCursor(int cursor){
 }
 
 
- int EseG(Tema t){ //Easter Egg
+//          CARREGADOR E CRIADOR DE ARQUIVO TEMAS.TXT
+//=====================================================================================================
+void TemaLoad(FILE *arquivo, Tema vetor[]){  
+    arquivo = fopen("temas.txt", "rb");
+
+    if(arquivo == NULL) {                          //backup temas.txt
+        arquivo = fopen("temas.txt", "w+b"); 
+        Tema Temas1[] = {{ .nome = "Night Mode", .letra = 8, .fundo = 0},
+                    { .nome = "Bulbasaur", .letra = 0 , .fundo = 2},
+                    { .nome = "Squirtle", .letra = 0 , .fundo = 3},
+                    { .nome = "Charmander", .letra = 0 , .fundo = 4},
+                    { .nome = "Ekans", .letra = 0 , .fundo = 5},
+                    { .nome = "Pikachu", .letra = 0 , .fundo = 6},
+                    { .nome = "Lapras", .letra = 0 , .fundo = 11},
+                    { .nome = "Chansey", .letra = 0 , .fundo = 12},
+                    { .nome = "Matrix", .letra = 10 , .fundo = 0},
+                    { .nome = "Bozo", .letra = 6, .fundo = 2},
+                    { .nome = "Molusco", .letra = 15, .fundo = 4}};
+        fwrite(Temas1, sizeof(Tema), 11, arquivo);
+    }
+
+    fseek(arquivo, 0, SEEK_SET);
+    for(int b = 0 ; b < 11; b++){
+        fread(&vetor[b], sizeof(Tema), 1, arquivo);
+    }
+    fclose(arquivo);
+}
+
+
+//                              ????? ENIGMA ??????
+//=====================================================================================================
+ int EseG(Tema t){ 
         char code; int i, j;
         Caixa(19, 5 , 79, 14, 1);
         Cores(15, 0);
@@ -109,7 +156,8 @@ void TipoCursor(int cursor){
 }
 
 
-
+//                              CRIPTOGRAFIA SEM USO
+//=====================================================================================================
 char *EncDec(char palavra[], int num){ // Funcao de Encriptar/Decriptar string ... necessita passar string por referencia 
     int i, tam = strlen(palavra);
     //Encriptar
@@ -129,6 +177,8 @@ char *EncDec(char palavra[], int num){ // Funcao de Encriptar/Decriptar string .
 }
 
 
+//                          TELA INICIAL LAYOUT
+//=====================================================================================================
 void Inicio(Tema t, int num){
 
     int cdf = t.letra;
