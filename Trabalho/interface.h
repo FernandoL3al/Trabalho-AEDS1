@@ -61,4 +61,6 @@ void TemaLoad(FILE *arquivo, Tema vetor[]);
 
 char *EncDec(char palavra[], int num);
 
+void TelaFinal(Tema z);
+
 #endif // INTERFACE_H_INCLUDED

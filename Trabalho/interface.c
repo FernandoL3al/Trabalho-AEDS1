@@ -119,12 +119,13 @@ void TemaLoad(FILE *arquivo, Tema vetor[]){
                     { .nome = "Chansey", .letra = 0 , .fundo = 12},
                     { .nome = "Matrix", .letra = 10 , .fundo = 0},
                     { .nome = "Bozo", .letra = 6, .fundo = 2},
-                    { .nome = "Molusco", .letra = 15, .fundo = 4}};
-        fwrite(Temas1, sizeof(Tema), 11, arquivo);
+                    { .nome = "Molusco", .letra = 15, .fundo = 4},
+                    { .nome = "?????", .letra = 13, .fundo = 0}};
+        fwrite(Temas1, sizeof(Tema), 12, arquivo);
     }
 
     fseek(arquivo, 0, SEEK_SET);
-    for(int b = 0 ; b < 11; b++){
+    for(int b = 0 ; b < 12; b++){
         fread(&vetor[b], sizeof(Tema), 1, arquivo);
     }
     fclose(arquivo);
@@ -190,7 +191,7 @@ void Inicio(Tema t, int num){
     Cores(fundo, cdf);
     Gotoxy(32, 2);
     Cores(cdf, fundo);
-    printf("                       LFA jobs                      ");
+    printf("                       LFA jobs                       ");
     Cores(fundo, cdf);
 
     Caixa(10, 8, 98, 8, 1); Cores(cdf, fundo); Caixa(12, 9, 94, 6, 0); Cores(cdf,fundo); Caixa(14, 11,90, 2,0);
@@ -210,8 +211,8 @@ void Inicio(Tema t, int num){
         Gotoxy(22,14); printf("~~~~~~~~~~~~~~~~~~~ |     jj   oooo   bbbbb   ssssss   | ~~~~~~~~~~~~~~~~~~"); Cores(/*0,11*/cdf, fundo);
         Gotoxy(22,15); printf("------------------- |     jj ooo  ooo bb  bb sss       | ------------------"); Cores(/*0,2*/cdf, fundo);
         Gotoxy(22,16); printf("------------------- |     jj oo    oo bbbbb    sssss   | ------------------"); Cores(/*0,10*/cdf, fundo);
-        Gotoxy(22,18); printf("--------------------\\  jjjj    oooo   bbbbb   ssssss   /----- --------------"); Cores(/*0,15*/cdf, fundo);
         Gotoxy(22,17); printf("------------------- | jj  jj ooo  ooo bb  bb      sss  | ------------------"); Cores(/*0,14*/cdf, fundo);
+        Gotoxy(22,18); printf("--------------------\\  jjjj    oooo   bbbbb   ssssss   /-------------------"); Cores(/*0,15*/cdf, fundo);
     }
     if(num == 1){
         Gotoxy(22, 7); Cores(2, 6);printf("                              ");Cores(6,2);printf("2222222222222222");Cores(2,6);printf("                             "); Cores(2, 6);
@@ -227,11 +228,11 @@ void Inicio(Tema t, int num){
         Gotoxy(22,17); printf("                        ");Cores(6,2);printf("22222");Cores(1,15);printf("2222222222222222222");Cores(6,2);printf("2222222");Cores(2,6);printf("                    "); Cores(2, 6);
         Gotoxy(22,18); printf("                             ");Cores(6,2);printf("2222222222222222222");Cores(2,6);printf("                           "); Cores(2, 6);
 
-        Gotoxy(4, 28); printf("     Meus parab%cns , voc%c encontrou nosso easter egg!!! ...     ", 130, 136);
+        Cores(cdf,fundo); Gotoxy(4, 28); printf("     Meus parab%cns , voc%c encontrou nosso easter egg!!! ...     ", 130, 136);
     }
 
     if(num == 2){
-        Gotoxy(22, 7); printf("                                    ");Cores(4,15);printf("131313");Cores(15,4);printf("                                 "); Cores(cdf/*LIGHT_RED*/, fundo);
+        Gotoxy(22, 7); Cores(cdf, fundo); printf("                                    ");Cores(4,15);printf("131313");Cores(15,4);printf("                                 "); Cores(cdf/*LIGHT_RED*/, fundo);
         Gotoxy(22, 8); printf("                                   ");Cores(4,15);printf("13131313");Cores(15,4);printf("                                "); Cores(cdf/*RED*/, fundo);
         Gotoxy(22, 9); printf("                                  ");Cores(4,15);printf("3131313131");Cores(15,4);printf("                               "); Cores(cdf/*LIGHT_MAGENTA*/, fundo);
         Gotoxy(22,10); printf("             ");Cores(4,15);printf("13131313131313131313131313131313131313131313131313");Cores(15,4);printf("            "); Cores(cdf/*MAGENTA*/, fundo);
@@ -244,7 +245,7 @@ void Inicio(Tema t, int num){
         Gotoxy(22,17); printf("                    ");Cores(4,15);printf("131313131313");Cores(15,4);printf("             ");Cores(4,15);printf("3131313131313");Cores(15,4);printf("                 "); Cores(cdf/*YELLOW*/, fundo);
         Gotoxy(22,18); printf("                  ");Cores(4,15);printf("13131313");Cores(15,4);printf("                         ");Cores(4,15);printf("131313131");Cores(15,4);printf("               "); Cores(cdf/*WHITE*/, fundo);
         
-        Gotoxy(4, 28); printf("     Meus parab%cns , voc%c encontrou nosso easter egg!!! ...     ", 130, 136);
+        Cores(cdf,fundo); Gotoxy(4, 28); printf("     Meus parab%cns , voc%c encontrou nosso easter egg!!! ...     ", 130, 136);
     }
     Cores(fundo, cdf);
     Gotoxy(42,22); printf("---- TRABALHO AEDS 1%c PER%cODO ----", 248, 214);
@@ -254,18 +255,38 @@ void Inicio(Tema t, int num){
     Cores(cdf, fundo);
     Gotoxy(34, 25); printf("               Fernando Leal & Arthur              ");
     Cores(cdf, fundo);
-    Gotoxy(90, 28); printf("   copyright %c LFA 2022   ", 184);
+    Gotoxy(80, 28); printf("              copyright %c LFA 2022   ", 184);
     
 }
+/*
+void TelaFinal(Tema z){
+    Caixa(21, 6, 75, 12, 0); Cores(z.fundo, z.letra);
+    Gotoxy(24,7); printf("Unimontes - Montes Claros - Sistemas de Informa%c%co - Primeiro Per%codo",135, 198, 161);
+    Gotoxy(50,8); printf("Trabalho de AEDS 1");
+    Gotoxy(40,9); printf("Tema : Sistema de Ag%cncia de Empregos",136);
+    Gotoxy(49,10); printf("Professor : Heveraldo");
+    Gotoxy(44,11); printf("Alunos : Luis Fernando e Arthur");
+    Gotoxy(47,12); printf("Programa : LFA jobs v1.0");
+    Gotoxy(31,13); printf("Data de In%ccio : 25/06/2022    T%crmino : ?? / ?? / ????",161,130);
+    Gotoxy(24,15); printf("N%cs, Fernando e Arthur, agradecemos a voc%c por utilizar nosso software,", 162, 136);
+    Gotoxy(25,16); printf("e pedimos queem caso de qualquer bug   entrem em contato com a gente.");
+    Gotoxy(52,17);printf("Volte sempre :)");
+    Gotoxy(39,18); system("pause");
+}*/
 
-
-
-
-
-
-
-
-
-
-
-
+void TelaFinal(Tema z){
+    Caixa(21, 6, 75, 12, 0); Cores(z.letra, z.fundo);
+    Gotoxy(22,7);  printf("   Unimontes - Montes Claros - Sistemas de Informa%c%co - Primeiro Per%codo   ",135, 198, 161);
+    Gotoxy(22,8);  printf("                            Trabalho de AEDS 1                             ");
+    Gotoxy(22,9);  printf("                  Tema : Sistema de Ag%cncia de Empregos                    ",136);
+    Gotoxy(22,10); printf("                           Professor : Heveraldo                           ");
+    Gotoxy(22,11); printf("                     Alunos : Luis Fernando e Arthur                       ");
+    Gotoxy(22,12); printf("                         Programa : LFA jobs v1.0                          ");
+    Gotoxy(22,13); printf("         Data de In%ccio : 25/06/2022    T%crmino : ?? / ?? / ????           ",161,130);
+    Gotoxy(22,14); printf("                                                                           ");
+    Gotoxy(22,15); printf("  N%cs, Fernando e Arthur, agradecemos a voc%c por utilizar nosso software,  ", 162, 136);
+    Gotoxy(22,16); printf("   e pedimos quee m caso de qualquer bug   entrem em contato com a gente.  ");
+    Gotoxy(22,17); printf("                                                                           ");
+    Gotoxy(22,18); printf("                               Volte sempre :)                             ");
+    Gotoxy(4,28); Cores(z.fundo, z.letra);Cores(z.letra, z.fundo);printf("                                 ");Gotoxy(37,28); system("pause");
+}

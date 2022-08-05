@@ -3,11 +3,31 @@
 #include <string.h>
 #include "interface.h"
 #include "cadastro.h"
+#include "login.h"
+
+
+//                OBLITERADOR DE REGISTROS
+//========================================================================
+void ObliteratorCliente(char *end_arquivo, int pattern){   //realmente exclui registro
+    Cliente item;
+    char new_name[30];
+    FILE *arquivo = fopen(end_arquivo, "rb");
+    FILE *arquivo_copia = fopen("temp.txt", "wb");
+    fseek(arquivo, 0, SEEK_SET);
+    while(fread(&item, sizeof(item), 1, arquivo)){
+        if(item.Codigo == pattern) continue;
+        fwrite(&item, sizeof(item), 1, arquivo_copia);
+    }
+    fclose(arquivo); fclose(arquivo_copia);
+    strcpy(new_name, end_arquivo);
+    remove(end_arquivo);
+    rename("temp.txt", new_name);
+}
 
 
 //                          DIGITAR HVRS(EDITED)
 //=====================================================================================================
-Cliente DigitarCliente(Tema t){
+Cliente DigitarCliente(Tema t, Login *a){
     Cliente C;
     Cores(t.fundo, t.letra); Caixa(0, 0, 118, 28, 1);
     Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
@@ -16,53 +36,84 @@ Cliente DigitarCliente(Tema t){
     Gotoxy(27,2); printf("                       Cadastro de Cliente                       ");
     Gotoxy(22,  7); printf("C%cdigo:....................................................................", 162);
     Gotoxy(22,  11);printf("Nome:......................................................................"); 
-    Gotoxy(22, 15); printf("Telefone:..................................................................."); 
+    Gotoxy(22, 15); printf("Telefone:...................................................................");
     Gotoxy(35,  7); scanf("%d", &C.Codigo) ; Gotoxy(35, 11); scanf(" %[^\n]", C.Nome); Gotoxy(35, 15); scanf(" %[^\n]", C.Telefone);
+    Gotoxy(35, 7); *a = GetLogin(C.Nome);
     return C;
 }
 
 
 //                          LISTAR HVRS(EDITED)
 //=====================================================================================================
-void ListarClientes(Cliente vetor[], int Quantidade, Tema t){
+void ListarClientes(char *end_arquivo, Tema t){
+    FILE *arquivo = fopen(end_arquivo, "rb");
+    int Quantidade = 0;
+    Cliente reg;
     Cores(t.fundo,t.letra); Caixa(0, 0, 118, 28, 1);
     Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
     Cores(t.fundo, t.letra); Caixa(24, 1, 70, 1, 0);
     Cores(t.letra, t.fundo);
-    
-    Gotoxy(27,2); printf("                              Lista                             ");
-    for(int i = 0; i < Quantidade; i++){
-        Gotoxy(24, 7 + i);
-        printf("%8d %-42s %-14s", vetor[i].Codigo,
-              vetor[i].Nome, vetor[i].Telefone);
-    }               
-    Gotoxy(24,  5); printf("C%cdigo   Nome                                       Telefone        \n", 162);
-    Gotoxy(24, 6); printf("-------- ------------------------------------------ -------------- \n");
-    Gotoxy(24, 21); printf("                            %d Cadastros                                   \n", Quantidade);
-
-                    
+    Gotoxy(27,2); printf("                              Lista                              ");
+    fseek(arquivo, 0, SEEK_SET);
+    while(fread(&reg, sizeof(Cliente), 1, arquivo)){
+        Gotoxy(27, 7 + Quantidade);
+        printf("%8d %-42s %-14s", reg.Codigo,
+              reg.Nome, reg.Telefone);
+        Quantidade++;
+    }
+    Gotoxy(27,  5); printf("C%cdigo   Nome                                       Telefone        \n", 162);
+    Gotoxy(27, 6); printf("-------- ------------------------------------------ -------------- \n");
+    Gotoxy(27, 21); printf("                            %d Cadastros                                   \n", Quantidade);
+    fclose(arquivo);                    
 }
+
 
 //                          PESQUISAR HVRS(EDITED, TEMAS)
 //=====================================================================================================
-void PesquisarCliente(Cliente vetor[], int Quantidade, Tema t){
-    int i, Codigo;
+void PesquisarCliente(Tema t, char *end_arquivo){
+    FILE *arquivo = fopen(end_arquivo, "rb+");
+    int Codigo; Cliente a; Login login;
+
+    int x[] = {37,52,67}, y[] = {14,14,14}; char opcoes[][20] = {"     Alterar     ", "     Excluir      ", "       Sair        "}; int menu; //vars Menu de alterar
+
     Cores(t.fundo, t.letra); Caixa(0, 0, 118, 28, 1);
     Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
     Cores(t.fundo, t.letra); Caixa(24, 1, 70, 1, 0);
     Cores(t.letra, t.fundo);
-    Gotoxy(27,2); printf("                              Pesquisa                          ");
-    Gotoxy(46,  7); printf("Digite o C%cdigo: ", 162); Gotoxy(63, 7); scanf("%d", &Codigo);
-    for(i = 0; i < Quantidade; i++){
-        if(Codigo == vetor[i].Codigo){
-            Gotoxy(24, 8); printf("C%cdigo   Nome                                       Telefone        \n", 162);
-            Gotoxy(24, 9); printf("-------- ------------------------------------------ -------------- \n");
-             Gotoxy(24, 10);
-            printf("%8d %-42s %-14s", vetor[i].Codigo,
-                 vetor[i].Nome, vetor[i].Telefone);
-            Gotoxy(39, 19);
-            system("pause");
-            return;
+    
+    Gotoxy(27,2); printf("                              Pesquisa                           ");
+    Gotoxy(46,  7); printf("    Digite o C%cdigo: ", 162); Gotoxy(67, 7); scanf("%d", &Codigo);
+    while(fread(&a, sizeof(Cliente), 1, arquivo)){
+        if(Codigo == a.Codigo){
+            Gotoxy(27, 8); printf("C%cdigo   Nome                                       Telefone        \n", 162);
+            Gotoxy(27, 9); printf("-------- ------------------------------------------ -------------- \n");
+            Gotoxy(27, 10);
+            printf("%8d %-42s %-14s", a.Codigo,
+                 a.Nome, a.Telefone);
+            Gotoxy(43, 12); Cores(t.fundo, t.letra); printf(" Deseja excluir ou alterar registro? ");
+            Caixa(36,13,49,1,1);
+            menu = Menu(x, y, opcoes, 3, t);
+            //             ALTERAR
+            //=========================================
+            if(menu == 0){         //alterar
+                a = DigitarCliente(t, &login);
+                fseek(arquivo, -sizeof(Cliente), SEEK_CUR);
+                fwrite(&a, sizeof(Cliente), 1, arquivo);
+                fclose(arquivo);
+                return;
+            }
+            //             EXCLUIR
+            //=========================================
+            if(menu == 1){         //excluir
+                fclose(arquivo);
+                ObliteratorCliente(end_arquivo, Codigo);
+                return;
+            }
+            if(menu != 2){
+                Gotoxy(39, 19);
+                system("pause");
+                return;
+            }
         }
     }               
     Caixa(44, 14 , 30 , 1, 1);
@@ -72,99 +123,56 @@ void PesquisarCliente(Cliente vetor[], int Quantidade, Tema t){
     system("pause");
 }
 
-
 //                          ATIVAR CLIENTE HVRS(EDITED, TEMAS)
 //=====================================================================================================
 void AtivarCliente(Tema t,FILE *arquivo, char *end_arquivo){
-    int Opcao;
-    int x[] = {36,56,82};
+    int Opcao; Login login;
+    int x[] = {32,53,71};
     int y[] = {24,24,24};
-    char sla[][20] = {"Novo", "Pesquisar", "Sair"};
+    char sla[][20] = {"      Novo      ", "   Pesquisar   ", "       Sair        "};
+    Cliente a; //vetor[50]; int Contador = 0;
 
-    Cliente a, vetor[50]; int Contador = 0;
-    arquivo = fopen(end_arquivo,"ab+");
-    fseek(arquivo, 0, SEEK_SET);
-    while(fread(&vetor[Contador], sizeof(Cliente), 1, arquivo)){
-        Contador++;
-    }
-    fclose(arquivo);
+    //arquivo = fopen(end_arquivo,"rb+");
+    //fseek(arquivo, 0, SEEK_SET);
+    //while(fread(&vetor[Contador], sizeof(Cliente), 1, arquivo)){
+    //    Contador++;
+    //}
+    //fclose;
     do{
-        
         system("cls");
-        ListarClientes(vetor, Contador, t);
+        ListarClientes(end_arquivo, t);
         Cores(t.fundo, t.letra); Caixa(20, 23 , 80, 1, 0); 
         Opcao = Menu(x, y, sla, 3, t);
-        if(Opcao == 0){
-            arquivo = fopen(end_arquivo, "ab+");
-            a = DigitarCliente(t);
-            vetor[Contador++] = a;
+        if(Opcao == 0){        //Novo
+            arquivo = fopen(end_arquivo,"ab");
+            a = DigitarCliente(t, &login);
             fwrite(&a, sizeof(Cliente), 1, arquivo);
             fclose(arquivo);
         }
-        if(Opcao == 1)
-            PesquisarCliente(vetor, Contador, t);
-    } while(Opcao != 2);    
+        if(Opcao == 1){    //Pesquisar
+            PesquisarCliente( t, end_arquivo);
+        }
+    } while(Opcao != 2);
 }
-
-
-//                          LEITURA 
-//=====================================================================================================
-void Leitura(FILE *arquivo, Cliente vetor[], char *end_arquivo){
-    arquivo = fopen(end_arquivo, "rb+");
-    int i = 0;
-    fseek(arquivo, 0, SEEK_SET);
-    while(fread(&vetor[i], sizeof(Cliente), 1, arquivo)){
-        i++;
-    }
-}
-
-
-//                          ESCRITA
-//=====================================================================================================
-void Escrita(FILE *arquivo, Cliente vetor[]){
-    fseek(arquivo, 0, SEEK_END);
-    fwrite(vetor, sizeof(Cliente), 1, arquivo);
-}
-
 
 //                          CRIACAO DE ARQUIVOS DE DADOS INICIAIS
 //=====================================================================================================
 void Default(FILE *arquivo, int escolha){
     if(escolha == 1){
         arquivo = fopen("empresas.txt", "wb");
-        Cliente defaul[] = {{ .Codigo = 002, .Nome = "Yourbank", .Telefone = "1414989375" },
-                            { .Codigo = 023, .Nome = "Microloft", .Telefone = "1374-75701" },
-                            { .Codigo = 013, .Nome = "Akazon", .Telefone = "153764-356" },
+        Cliente defaul[] = {{ .Codigo = 023, .Nome = "Microloft", .Telefone = "1374-75701" },
                             { .Codigo = 233, .Nome = "Kabaum", .Telefone = "53056-9436" },
                             { .Codigo = 453, .Nome = "Groogue", .Telefone = "1958-544" }};
         fseek(arquivo, 0, SEEK_SET);
-        fwrite(defaul, sizeof(Cliente), 5, arquivo);
+        fwrite(defaul, sizeof(Cliente), 3, arquivo);
     }
     if (escolha == 2){
         arquivo = fopen("pessoas.txt", "wb");
-        Cliente defaul2[] = {{ .Codigo = 100, .Nome = "Joao", .Telefone = "234234-245" },
-                            { .Codigo = 101, .Nome = "Jose", .Telefone = "56756-43950" },
+        Cliente defaul2[] = {{ .Codigo = 103, .Nome = "Barbara", .Telefone = "0899-4456" },
                             { .Codigo = 13, .Nome = "Lulosvaldo", .Telefone = "131313-1313" },
-                            { .Codigo = 102, .Nome = "Maria", .Telefone = "3453-3585" },
-                            { .Codigo = 103, .Nome = "Barbara", .Telefone = "0899-4456" },
-                            { .Codigo = 22, .Nome = "Jao Bozonaro", .Telefone = "222222-222" },
-                            { .Codigo = 104, .Nome = "Luiza", .Telefone = "12223-34985" }};
+                            { .Codigo = 22, .Nome = "Jao Bozonaro", .Telefone = "222222-222" }};
         fseek(arquivo, 0, SEEK_SET);
-        fwrite(defaul2, sizeof(Cliente), 7, arquivo);
-    }
-    fclose(arquivo);
-    
-}
-
-
-//                          CARREGADOR
-//=====================================================================================================
-void Carregar(Cliente vetor[], int *Contador, FILE *arquivo){
-    int i = 0;
-    fseek(arquivo, 0, SEEK_SET);
-    while(fread(&vetor[i], sizeof(Cliente), 1, arquivo)){
-        i++;
-        *Contador += 1; // alterando o valor do endereco apontado
+        fwrite(defaul2, sizeof(Cliente), 3, arquivo);
     }
     fclose(arquivo);
 }

@@ -20,8 +20,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "login.h"
 #include "cadastro.h"
 #include "interface.h"
+#include "vagas.h"
 
 
 //                          CRIACAO PONTEIROS DE ARQUIVO
@@ -29,6 +31,7 @@
 FILE *arq_tema;
 FILE *arq_empresa;
 FILE *arq_pessoa;
+FILE *arq_vaga;
 
 
 //                                  MAIN
@@ -37,7 +40,7 @@ int main(){
 
     //                     LEITURA DO ARQUIVO TEMAS
     //==================================================================
-    Tema Temas[11];
+    Tema Temas[12];
     TemaLoad(arq_tema, Temas);
 
     //                     MENUS
@@ -46,7 +49,7 @@ int main(){
 
     //                    DEFAULT TEMA
     //==================================================================
-    Tema z = Temas[2];
+    Tema z = Temas[0];
 
     //                 LER/CRIAR ARQUIVOS
     //==================================================================
@@ -60,7 +63,12 @@ int main(){
         Default(arq_pessoa, 2);
         arq_pessoa = fopen("pessoas.txt", "rb+");
     }
-    fclose(arq_empresa); fclose(arq_pessoa);
+    arq_vaga = fopen("vagas.txt", "rb+");
+    if(arq_vaga == NULL){
+        DefaultVaga(arq_vaga);
+        arq_vaga = fopen("vagas.txt", "rb+");
+    }
+    fclose(arq_empresa); fclose(arq_pessoa); fclose(arq_vaga); 
 
 
     //                   LOOP PROGRAMA
@@ -77,24 +85,25 @@ int main(){
 
         //           COORD/OPC   MENU PRINCIPAL
         //=======================================================
-        int x[] = {34, 49, 64, 79};
+        int x[] = {29, 45, 61, 76};
         int y[] = {4, 4, 4, 4};
-        char Opcoes[][20] = {"Cliente", "Vagas", "Temas", "Sair"};
+        char Opcoes[][20] = {"    Cliente      ", "      Vagas      ", "     Temas      ", "       Sair        "};
 
         //           COORD/OPC  MENU CLIENTE
         //=======================================================
-        int x1[] = {25, 25};
+        int x1[] = {34, 34};
         int y1[] = {6, 7};
         char OpcoesCad[][20] = {"Pessoa", "Empresa"};
 
         //           COORD/OPC   MENU VAGAS
         //=======================================================
-        int x2[] = {};
-        int y2[] = {};
+        int x2[] = {49, 49};
+        int y2[] = {6, 7};
+        char OpcoesVagas[][20] = {"Pessoa", "Empresa"};
 
         //           COORD/OPC   MENU TEMAS
         //=======================================================
-        int xcor[] = {70,70,70,70,70,70,70,70,70};
+        int xcor[] = {64,64,64,64,64,64,64,64,64};
         int ycor[] = {6,7,8,9,10,11,12,13,14};
         char OpCores[][20] = {"Night Mode","Bulbasaur", "Squirtle",
                               "Charmander", "Ekans", "Pikachu",
@@ -106,7 +115,7 @@ int main(){
         //                    CADASTRO
         //=======================================================
         if(Opcao == 0){
-             Caixa(24, 5, 15, 2, 1);
+             Caixa(33, 5, 10, 2, 1);
              Opcao1 = Menu(x1, y1, OpcoesCad, 2, z);
              if(Opcao1 == 0) AtivarCliente(z, arq_pessoa, "pessoas.txt");
              if(Opcao1 == 1) AtivarCliente(z, arq_empresa, "empresas.txt");
@@ -116,16 +125,16 @@ int main(){
         //                    VAGAS
         //=======================================================
         if(Opcao == 1) {
-             Caixa(24, 5, 20, 2, 1);
-             //Opcao1 = Menu();
-             if(Opcao1 == 0){};
-             if(Opcao1 == 1){};
+             Caixa(48, 5, 10, 2, 1);
+             Opcao1 = Menu(x2, y2, OpcoesVagas, 2, z);
+             if(Opcao1 == 0) AtivarVaga(arq_vaga, z, 1, "vagas.txt");
+             if(Opcao1 == 1) AtivarVaga(arq_vaga, z, 2, "vagas.txt");
         }
 
         //                    TEMAS
         //=======================================================
         if(Opcao == 2){
-            Caixa(69, 5, 10, 9, 1);
+            Caixa(63, 5, 10, 9, 1);
             Opcao1 = Menu(xcor, ycor, OpCores, 9, z);
             if(Opcao1 != -1)
                 z = Temas[Opcao1];
@@ -137,20 +146,17 @@ int main(){
 
     fclose(arq_empresa); //precaucao
     fclose(arq_pessoa);
-    system("cls");
+    //system("cls");
 
 
     //                   MENSAGEM FINAL
     //==================================================================
-    Cores(z.letra, z.fundo);
-    printf("\n\t\t\t  Unimontes - Montes Claros - Sistemas de Inform%c%co - Primeiro Per%codo  \n\t\t\t\t\t\t  Trabalho de AEDS 1  \n\t\t\t\t\t  Tema : Sistema de Ag%cncia de Empregos  \n\t\t\t\t\t\t  Professor : Heveraldo  \n\n\t\t\t\t\t  Alunos : Luis Fernando e Arthur  \n\t\t\t\t\t\t  Programa : LFA jobs v1.0  \n\n\t\t\t\t  Data de In%ccio : 25/06/2022    T%crmino : ?? / ?? / ????  \n\n", 135, 198, 161,136,161,130);
-    Cores(z.fundo, z.letra);
-    printf("\tN%cs, Fernando e Arthur, agradecemos a voc%c por utilizar nosso software , e pedimos que em caso de qualquer bug   entrem em contato com a gente.\n\n\t\t\t\t\t\tVolte sempre  :)\n\n\t\t\t\t", 162, 136);
-    system("pause");
+    TelaFinal(z);
     
+
     //                 RETORNO AO PADRAO DO TERMINAL
     //==================================================================
-    Cores(0,15);
-    system("cls");
-    return 0;
+   Cores(0,15);
+   system("cls");
+   return 0;
 }
