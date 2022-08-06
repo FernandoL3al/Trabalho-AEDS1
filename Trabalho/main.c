@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "login.h"
+//#include "login.h"
 #include "cadastro.h"
 #include "interface.h"
 #include "vagas.h"
@@ -87,25 +87,25 @@ int main(){
         //=======================================================
         int x[] = {29, 45, 61, 76};
         int y[] = {4, 4, 4, 4};
-        char Opcoes[][20] = {"    Cliente      ", "      Vagas      ", "     Temas      ", "       Sair        "};
+        char Opcoes[][30] = {"    Cliente      ", "      Vagas      ", "     Temas      ", "       Sair        "};
 
         //           COORD/OPC  MENU CLIENTE
         //=======================================================
         int x1[] = {34, 34};
         int y1[] = {6, 7};
-        char OpcoesCad[][20] = {"Pessoa", "Empresa"};
+        char OpcoesCad[][30] = {"Pessoa", "Empresa"};
 
         //           COORD/OPC   MENU VAGAS
         //=======================================================
         int x2[] = {49, 49};
         int y2[] = {6, 7};
-        char OpcoesVagas[][20] = {"Pessoa", "Empresa"};
+        char OpcoesVagas[][30] = {"Pessoa", "Empresa"};
 
         //           COORD/OPC   MENU TEMAS
         //=======================================================
         int xcor[] = {64,64,64,64,64,64,64,64,64};
         int ycor[] = {6,7,8,9,10,11,12,13,14};
-        char OpCores[][20] = {"Night Mode","Bulbasaur", "Squirtle",
+        char OpCores[][30] = {"Night Mode","Bulbasaur", "Squirtle",
                               "Charmander", "Ekans", "Pikachu",
                                "Lapras", "Chansey", "Matrix"};
 
@@ -146,7 +146,6 @@ int main(){
 
     fclose(arq_empresa); //precaucao
     fclose(arq_pessoa);
-    //system("cls");
 
 
     //                   MENSAGEM FINAL

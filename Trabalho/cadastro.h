@@ -1,7 +1,6 @@
 #ifndef CADASTRO_H_INCLUDED
 #define CADASTRO_H_INCLUDED
 #include "interface.h"
-#include "login.h"
 
 
 
@@ -11,12 +10,13 @@ typedef struct{
     int Codigo;
     char Nome[51];
     char Telefone[21];
-} Cliente; // tamanho de Cliente 76 bytes
+    char Senha[31];
+} Cliente; 
 
 
 //                          HVRS FUNCTIONS
 //=====================================================================================================
-Cliente DigitarCliente(Tema t, Login *a);
+Cliente DigitarCliente(Tema t, FILE *arquivo);
 
 //void ListarClientes(Cliente vetor[], int Quantidade, Tema t);
 void ListarClientes(char *end_arquivo, Tema t);
@@ -44,5 +44,12 @@ void Default(FILE *arquivo, int escolha);
 //========================================================================
 void ObliteratorCliente(char *end_arquivo, int pattern);
 
+
+//                       FUNCOES DE SEGURANCA
+//======================================================================================
+
+void GetLogin(Cliente *C, FILE *arquivo, Tema t);
+
+int Autenticacao(Cliente z, FILE *arquivo, Tema t);
 
 #endif // CADASTRO_H_INCLUDED

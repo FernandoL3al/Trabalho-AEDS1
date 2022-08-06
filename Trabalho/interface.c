@@ -43,7 +43,7 @@ void Cores(int fundo, int letras){
 
 //                          MENU HVRS(EDITED, TEMAS)
 //=====================================================================================================
-int Menu(int x[], int y[], char Opcoes[][20], int n, Tema t){
+int Menu(int x[], int y[], char Opcoes[][30], int n, Tema t){
     int i, Opcao = 0, tecla;
     TipoCursor(0);
     Cores(t.fundo, t.letra);
@@ -285,7 +285,7 @@ void TelaFinal(Tema z){
     Gotoxy(22,13); printf("         Data de In%ccio : 25/06/2022    T%crmino : ?? / ?? / ????           ",161,130);
     Gotoxy(22,14); printf("                                                                           ");
     Gotoxy(22,15); printf("  N%cs, Fernando e Arthur, agradecemos a voc%c por utilizar nosso software,  ", 162, 136);
-    Gotoxy(22,16); printf("   e pedimos quee m caso de qualquer bug   entrem em contato com a gente.  ");
+    Gotoxy(22,16); printf("    e pedimos que em caso de qualquer bug entrem em contato com a gente.   ");
     Gotoxy(22,17); printf("                                                                           ");
     Gotoxy(22,18); printf("                               Volte sempre :)                             ");
     Gotoxy(4,28); Cores(z.fundo, z.letra);Cores(z.letra, z.fundo);printf("                                 ");Gotoxy(37,28); system("pause");

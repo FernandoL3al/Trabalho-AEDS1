@@ -5,7 +5,7 @@
 #include "interface.h"
 #include "vagas.h"
 #include "cadastro.h"
-#include "login.h"
+//#include "login.h"
 
 
 
@@ -30,7 +30,7 @@ void ObliteratorVagas(char *end_arquivo, char *pattern){   //realmente exclui re
 
 //                           COMPARA SE EMPRESA EXISTE
 //=======================================================================================================
-int CompareDados(char *nome, char *end_arquivo){// preciso compara empresas pra so deixar criar vaga se ja tiver cad de empresa
+int CompareDados(char *nome, char *end_arquivo, Tema t){// preciso compara empresas pra so deixar criar vaga se ja tiver cad de empresa
     FILE *arquivo = fopen(end_arquivo, "rb");
     Cliente Receptor;
     fseek(arquivo, 0, SEEK_SET);
@@ -39,7 +39,7 @@ int CompareDados(char *nome, char *end_arquivo){// preciso compara empresas pra 
             printf("Empresa sem cadastro!");
             return 0;
         }
-        else Autenticacao();
+        else Autenticacao(Receptor, arquivo, t);
     }
     fclose(arquivo);
 }
@@ -75,7 +75,7 @@ Vaga CriarVaga(Tema t){
     Gotoxy(35,  7); scanf(" %[^\n]", C.Empresa);
 
     Gotoxy(35, 11); 
-    if(CompareDados(C.Empresa, "empresas.txt") == 0){
+    if(CompareDados(C.Empresa, "empresas.txt", t) == 0){
         strcpy(C.Empresa, "Vazio"); strcpy(C.NomeVaga, "Vazio"); strcpy(C.Area, "Vazio"); C.Salario = 00.00;
         ObliteratorVagas("vagas.txt", "Vazio");
         return C; 
@@ -118,7 +118,7 @@ void PesquisarVaga(Tema t, char *end_arquivo){
     FILE *arquivo = fopen(end_arquivo, "rb+");
     char Empresa[30]; Vaga a;
 
-    int x[] = {37,52,67}, y[] = {14,14,14}; char opcoes[][20] = {"     Alterar     ", "     Excluir      ", "       Sair        "}; int menu; //vars Menu de alterar
+    int x[] = {37,52,67}, y[] = {14,14,14}; char opcoes[][30] = {"     Alterar     ", "     Excluir      ", "       Sair        "}; int menu; //vars Menu de alterar
 
     Cores(t.fundo, t.letra); Caixa(0, 0, 118, 28, 1);
     Cores(t.letra, t.fundo); Caixa(3, 2, 112, 24, 1 );
@@ -171,23 +171,15 @@ void PesquisarVaga(Tema t, char *end_arquivo){
 //=====================================================================================================
 void AtivarVaga(FILE *arquivo, Tema t, int escolha, char *end_arquivo){
     int Opcao;
-    //char end_arquivo[20] = "vagas.txt";
     
     int x[] = {31,52,71};
     int y[] = {24,24,24};
-    char sla[][20] = {"  Cadastrar Vaga   " , "      Alterar      ", "       Sair        "};
+    char sla[][30] = {"  Cadastrar Vaga   " , "      Alterar      ", "       Sair        "};
     int x1[] = {37,71};
     int y1[] = {24,24};
-    char sla2[][20] = {" Aplicar-se a Vaga ", "       Sair        "};
+    char sla2[][30] = {" Aplicar-se a Vaga ", "       Sair        "};
 
-    Vaga a; //vetor[50]; int Contador = 0;
-
-    //arquivo = fopen(end_arquivo,"rb+");
-    //fseek(arquivo, 0, SEEK_SET);
-    //while(fread(&vetor[Contador], sizeof(Vaga), 1, arquivo)){
-    //    Contador++;
-    //}
-    //fclose;
+    Vaga a; 
     do{
         system("cls");
         ListarVaga(end_arquivo, t);

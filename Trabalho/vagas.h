@@ -10,7 +10,7 @@ typedef struct{
     double Salario;
 }Vaga;
 
-int CompareDados(char *nome, char *end_arquivo);
+int CompareDados(char *nome, char *end_arquivo,Tema t);
 
 //void AtivarVaga(FILE *arquivo, Tema t, int escolha);
 void AtivarVaga(FILE *arquivo, Tema t, int escolha, char *end_arquivo);

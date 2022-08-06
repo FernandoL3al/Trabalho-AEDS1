@@ -44,7 +44,7 @@ void Cores(int letras, int fundo);
 
 int MenuCor(int z);
 
-int Menu(int x[], int y[], char Opcoes[][20], int n, Tema t);
+int Menu(int x[], int y[], char Opcoes[][30], int n, Tema t);
 
 int GetTecla();
 
