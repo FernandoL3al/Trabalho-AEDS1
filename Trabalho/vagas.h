@@ -8,23 +8,31 @@ typedef struct{
     char NomeVaga[51];
     char Area[51];
     double Salario;
+    int Disponivel;
+    char linked[51];
 }Vaga;
 
-int CompareDados(char *nome, char *end_arquivo,Tema t);
+void AplicarVaga(Tema t);
 
-//void AtivarVaga(FILE *arquivo, Tema t, int escolha);
 void AtivarVaga(FILE *arquivo, Tema t, int escolha, char *end_arquivo);
 
+void DefaultVaga(FILE *arquivo);
 
-Vaga CriarVaga(Tema t);
+void ReprintTela();
+
+int CompareDados(char *nome, char *end_arquivo, Tema t, FILE *arquivo2);
+
+void CriarVaga(Tema t, Vaga *C, FILE *arquivo, FILE *arquivo2);
 
 void DefaultVaga(FILE *arquivo);
 
 void ListarVagas(Vaga vetor[], int Quantidade, Tema t);
 
-//void PesquisarVaga(Vaga vetor[], Tema t, FILE *arquivo);
-void PesquisarVaga(Tema t, char *end_arquivo);
+void PesquisarVaga(Tema t, char *end_arquivo, char *end_arquivo2);
 
+int Autenticacao(Cliente z, FILE *arquivo, Tema t);
+
+void Relatorio(Tema t);
 
 void ObliteratorVagas(char *end_arquivo, char *pattern);  //realmente exclui registro
 

@@ -288,13 +288,13 @@ int Autenticacao(Cliente z, FILE *arquivo, Tema t){
         fread(&z, sizeof(Cliente), 1, arquivo);
         if(strcmp(teste, z.Senha) == 0){
             Caixa(52, 12, 17, 1, 1 );
-            Gotoxy(53, 13); Cores(0,2); printf(" ACESSO LIBERADO ");Cores(t.fundo, t.letra);
+            Gotoxy(53, 13); Cores(0,2); printf(" ACESSO LIBERADO ");Cores(t.letra, t.fundo);
             Sleep(1000);
             return 1;
         }
         else {
             Caixa(53, 12, 16, 1, 1 );
-            Gotoxy(54, 13); Cores(0,4); printf(" ACESSO NEGADO! ");Cores(t.fundo, t.letra);
+            Gotoxy(54, 13); Cores(0,4); printf(" ACESSO NEGADO! ");Cores(t.letra, t.fundo);
             Caixa(53, 15, 14, 1, 1 );
             Gotoxy(55, 16); printf("Cancelar?(s)");
             if(getch() == 's'){

@@ -49,10 +49,13 @@ int main(){
 
     //                    DEFAULT TEMA
     //==================================================================
-    Tema z = Temas[0];
+    Tema z = Temas[3]; // mude aqui para alterar o tema padrao
 
     //                 LER/CRIAR ARQUIVOS
     //==================================================================
+    //DadosLoad(&arq_empresa, &arq_pessoa, &arq_vaga);
+
+    ///*
     arq_empresa = fopen("empresas.txt", "rb+");
     if(arq_empresa == NULL){
         Default(arq_empresa, 1);
@@ -69,6 +72,7 @@ int main(){
         arq_vaga = fopen("vagas.txt", "rb+");
     }
     fclose(arq_empresa); fclose(arq_pessoa); fclose(arq_vaga); 
+    //*/
 
 
     //                   LOOP PROGRAMA
@@ -97,9 +101,9 @@ int main(){
 
         //           COORD/OPC   MENU VAGAS
         //=======================================================
-        int x2[] = {49, 49};
-        int y2[] = {6, 7};
-        char OpcoesVagas[][30] = {"Pessoa", "Empresa"};
+        int x2[] = {49, 49, 49};
+        int y2[] = {6, 7, 8};
+        char OpcoesVagas[][30] = {"Pessoa", "Empresa", "Relatorio"};
 
         //           COORD/OPC   MENU TEMAS
         //=======================================================
@@ -125,10 +129,11 @@ int main(){
         //                    VAGAS
         //=======================================================
         if(Opcao == 1) {
-             Caixa(48, 5, 10, 2, 1);
-             Opcao1 = Menu(x2, y2, OpcoesVagas, 2, z);
+             Caixa(48, 5, 10, 3, 1);
+             Opcao1 = Menu(x2, y2, OpcoesVagas, 3, z);
              if(Opcao1 == 0) AtivarVaga(arq_vaga, z, 1, "vagas.txt");
              if(Opcao1 == 1) AtivarVaga(arq_vaga, z, 2, "vagas.txt");
+             if(Opcao1 == 2) Relatorio(z);
         }
 
         //                    TEMAS
@@ -142,7 +147,7 @@ int main(){
                 z = Temas[EseG(z)];
             }
         }
-    } while (Opcao != 3);
+    }while(Opcao != 3);
 
     fclose(arq_empresa); //precaucao
     fclose(arq_pessoa);
@@ -155,7 +160,7 @@ int main(){
 
     //                 RETORNO AO PADRAO DO TERMINAL
     //==================================================================
-   Cores(0,15);
-   system("cls");
-   return 0;
+    Cores(0,15);
+    system("cls");
+    return 0;
 }

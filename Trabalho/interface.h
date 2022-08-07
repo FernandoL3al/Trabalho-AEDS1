@@ -2,6 +2,7 @@
 #define INTERFACE_H_INCLUDED
 
 
+
 //                           TIPO STRUCT TEMA
 //=====================================================================================================
 typedef struct{
@@ -56,6 +57,8 @@ void TipoCursor(int cursor);
 void Inicio(Tema t, int num);
 
 int EseG(Tema t);
+
+void DadosLoad(FILE *arquivo, FILE *arquivo1, FILE *arquivo2);
 
 void TemaLoad(FILE *arquivo, Tema vetor[]);
 

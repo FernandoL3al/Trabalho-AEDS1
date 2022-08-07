@@ -3,6 +3,8 @@
 #include <string.h>
 #include <conio.h>
 #include "interface.h"
+#include "cadastro.h"
+#include "vagas.h"
 
 
 //                          lINHA COLUNA HVRS
@@ -75,7 +77,7 @@ int Menu(int x[], int y[], char Opcoes[][30], int n, Tema t){
 }
 
 
-//                          lINHA COLUNA HVRS
+//                          GET TECLA HVRS
 //=====================================================================================================
 int GetTecla(){
     int ch;
@@ -87,7 +89,7 @@ int GetTecla(){
 }
 
 
-//                          lINHA COLUNA HVRS
+//                             SEM CURSOR HVRS
 //=====================================================================================================
 void TipoCursor(int cursor){
     HANDLE myconsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -100,6 +102,29 @@ void TipoCursor(int cursor){
         CURSOR.bVisible = TRUE;
     result = SetConsoleCursorInfo(myconsole, &CURSOR);
 }
+
+
+//                                  CARREGADOR DE DADOS INICIAIS
+//===========================================================================================================
+void DadosLoad(FILE *arquivo, FILE *arquivo1, FILE *arquivo2){
+        arquivo = fopen("empresas.txt", "rb+");
+        if(arquivo == NULL){
+            Default(arquivo, 1);
+            arquivo = fopen("empresas.txt", "rb+");
+        }
+        arquivo1 = fopen("pessoas.txt", "rb+");
+        if(arquivo1 == NULL){
+            Default(arquivo1, 2);
+            arquivo1 = fopen("pessoas.txt", "rb+");
+        }
+        arquivo2 = fopen("vagas.txt", "rb+");
+        if(arquivo2 == NULL){
+            DefaultVaga(arquivo2);
+            arquivo2 = fopen("vagas.txt", "rb+");
+        }
+        fclose(arquivo); fclose(arquivo1); fclose(arquivo2); 
+}
+
 
 
 //          CARREGADOR E CRIADOR DE ARQUIVO TEMAS.TXT
@@ -157,20 +182,20 @@ void TemaLoad(FILE *arquivo, Tema vetor[]){
 }
 
 
-//                              CRIPTOGRAFIA SEM USO
+//                              CRIPTOGRAFIA(SEM USO)
 //=====================================================================================================
 char *EncDec(char palavra[], int num){ // Funcao de Encriptar/Decriptar string ... necessita passar string por referencia 
     int i, tam = strlen(palavra);
     //Encriptar
     if(num == 1){   
         for(i = 0; i < tam; i++){
-            if(palavra[i] >= 'D' && palavra[i] <= 'W' || palavra[i] >= 'd' && palavra[i] <= 'w' ) palavra[i] += 3;
+            if(((palavra[i] >= 'D') && (palavra[i] <= 'W')) || ((palavra[i] >= 'd') && (palavra[i] <= 'w'))) palavra[i] += 3;
         }
     }
     //Decriptar
     if(num == 2){
         for(i = 0; i < tam; i++){
-                if(palavra[i] >= 'D' && palavra[i] <= 'W' || palavra[i] >= 'd' && palavra[i] <= 'w' ) palavra[i] -= 3;
+                if(((palavra[i] >= 'D') && (palavra[i] <= 'W')) || ((palavra[i] >= 'd') && (palavra[i] <= 'w' ))) palavra[i] -= 3;
                 if(palavra[i] == '@') palavra[i] = ' ';
         }
     }
@@ -258,22 +283,10 @@ void Inicio(Tema t, int num){
     Gotoxy(80, 28); printf("              copyright %c LFA 2022   ", 184);
     
 }
-/*
-void TelaFinal(Tema z){
-    Caixa(21, 6, 75, 12, 0); Cores(z.fundo, z.letra);
-    Gotoxy(24,7); printf("Unimontes - Montes Claros - Sistemas de Informa%c%co - Primeiro Per%codo",135, 198, 161);
-    Gotoxy(50,8); printf("Trabalho de AEDS 1");
-    Gotoxy(40,9); printf("Tema : Sistema de Ag%cncia de Empregos",136);
-    Gotoxy(49,10); printf("Professor : Heveraldo");
-    Gotoxy(44,11); printf("Alunos : Luis Fernando e Arthur");
-    Gotoxy(47,12); printf("Programa : LFA jobs v1.0");
-    Gotoxy(31,13); printf("Data de In%ccio : 25/06/2022    T%crmino : ?? / ?? / ????",161,130);
-    Gotoxy(24,15); printf("N%cs, Fernando e Arthur, agradecemos a voc%c por utilizar nosso software,", 162, 136);
-    Gotoxy(25,16); printf("e pedimos queem caso de qualquer bug   entrem em contato com a gente.");
-    Gotoxy(52,17);printf("Volte sempre :)");
-    Gotoxy(39,18); system("pause");
-}*/
 
+
+//                                                   TELA FINAL AGRADECIMENTOS
+//=========================================================================================================================================
 void TelaFinal(Tema z){
     Caixa(21, 6, 75, 12, 0); Cores(z.letra, z.fundo);
     Gotoxy(22,7);  printf("   Unimontes - Montes Claros - Sistemas de Informa%c%co - Primeiro Per%codo   ",135, 198, 161);
