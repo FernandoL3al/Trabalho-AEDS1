@@ -43,8 +43,6 @@ void Caixa(int x, int y, int largura, int altura, int tipo);
 
 void Cores(int letras, int fundo);
 
-int MenuCor(int z);
-
 int Menu(int x[], int y[], char Opcoes[][30], int n, Tema t);
 
 int GetTecla();
@@ -54,11 +52,12 @@ void TipoCursor(int cursor);
 
 //                          FUNCTIONS
 //=====================================================================================================
+
+void Default(FILE *arq_empresa, FILE *arq_pessoa, FILE *arq_vaga);
+
 void Inicio(Tema t, int num);
 
 int EseG(Tema t);
-
-void DadosLoad(FILE *arquivo, FILE *arquivo1, FILE *arquivo2);
 
 void TemaLoad(FILE *arquivo, Tema vetor[]);
 

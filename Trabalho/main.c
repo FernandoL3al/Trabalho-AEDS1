@@ -20,7 +20,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include "login.h"
 #include "cadastro.h"
 #include "interface.h"
 #include "vagas.h"
@@ -49,31 +48,12 @@ int main(){
 
     //                    DEFAULT TEMA
     //==================================================================
-    Tema z = Temas[3]; // mude aqui para alterar o tema padrao
+    Tema z = Temas[2]; // mude aqui para alterar o tema padrao
 
     //                 LER/CRIAR ARQUIVOS
     //==================================================================
-    //DadosLoad(&arq_empresa, &arq_pessoa, &arq_vaga);
-
-    ///*
-    arq_empresa = fopen("empresas.txt", "rb+");
-    if(arq_empresa == NULL){
-        Default(arq_empresa, 1);
-        arq_empresa = fopen("empresas.txt", "rb+");
-    }
-    arq_pessoa = fopen("pessoas.txt", "rb+");
-    if(arq_pessoa == NULL){
-        Default(arq_pessoa, 2);
-        arq_pessoa = fopen("pessoas.txt", "rb+");
-    }
-    arq_vaga = fopen("vagas.txt", "rb+");
-    if(arq_vaga == NULL){
-        DefaultVaga(arq_vaga);
-        arq_vaga = fopen("vagas.txt", "rb+");
-    }
-    fclose(arq_empresa); fclose(arq_pessoa); fclose(arq_vaga); 
-    //*/
-
+    
+    Default(arq_empresa, arq_pessoa, arq_vaga);
 
     //                   LOOP PROGRAMA
     //==================================================================

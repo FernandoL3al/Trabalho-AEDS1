@@ -118,10 +118,7 @@ void PesquisarCliente(Tema t, char *end_arquivo){
                     return;
                 }
             }
-            if(menu != 2){
-                Gotoxy(39, 19);
-                //system("pause");
-                Sleep(1000);
+            if(menu == 2){
                 return;
             }
         }
@@ -129,8 +126,6 @@ void PesquisarCliente(Tema t, char *end_arquivo){
     Caixa(44, 14 , 30 , 1, 1);
     Gotoxy(46, 15);
     printf("   Cliente n%co Cadastrado   \n", 198);
-    Gotoxy(39, 19);
-    //system("pause");
     Sleep(1000);
 }
 
@@ -157,29 +152,6 @@ void AtivarCliente(Tema t,FILE *arquivo, char *end_arquivo){
             PesquisarCliente( t, end_arquivo);
         }
     } while(Opcao != 2);
-}
-
-
-//                          CRIACAO DE ARQUIVOS DE DADOS INICIAIS
-//=====================================================================================================
-void Default(FILE *arquivo, int escolha){
-    if(escolha == 1){
-        arquivo = fopen("empresas.txt", "wb");
-        Cliente defaul[] = {{ .Codigo = 023, .Nome = "Microloft", .Telefone = "1374-75701", .Senha = "12345" },
-                            { .Codigo = 233, .Nome = "Kabaum", .Telefone = "53056-9436", .Senha = "12345"},
-                            { .Codigo = 453, .Nome = "Groogue", .Telefone = "1958-544", .Senha = "12345"}};
-        fseek(arquivo, 0, SEEK_SET);
-        fwrite(defaul, sizeof(Cliente), 3, arquivo);
-    }
-    if (escolha == 2){
-        arquivo = fopen("pessoas.txt", "wb");
-        Cliente defaul2[] = {{ .Codigo = 103, .Nome = "Barbara", .Telefone = "0899-4456", .Senha = "12345"},
-                            { .Codigo = 13, .Nome = "Lulosvaldo", .Telefone = "131313-1313", .Senha = "12345"},
-                            { .Codigo = 22, .Nome = "Jao Bozonaro", .Telefone = "222222-222", .Senha = "12345" }};
-        fseek(arquivo, 0, SEEK_SET);
-        fwrite(defaul2, sizeof(Cliente), 3, arquivo);
-    }
-    fclose(arquivo);
 }
 
 

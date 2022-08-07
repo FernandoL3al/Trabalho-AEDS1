@@ -27,19 +27,6 @@ void ObliteratorVagas(char *end_arquivo, char *pattern){   //realmente exclui re
 }
 
 
-//                          CRIACAO DE ARQUIVOS DE DADOS INICIAIS
-//=====================================================================================================
-void DefaultVaga(FILE *arquivo){
-    arquivo = fopen("vagas.txt", "wb");
-    Vaga defaul[] = {{.Empresa = "Microloft", .Area = "TI", .NomeVaga = "Suporte Tecnico S.O.", .Salario = 1500.00, .Disponivel = 1},
-                    {.Empresa = "Kabaum", .Area = "Vendas", .NomeVaga = "Vendedor Online", .Salario = 1900.00, .Disponivel = 1},
-                    {.Empresa = "Groogue", .Area = "TI", .NomeVaga = "Desenvolvedor C", .Salario = 400.00, .Disponivel = 1}};
-    fseek(arquivo, 0, SEEK_SET);
-    fwrite(defaul, sizeof(Vaga), 3, arquivo);
-    fclose(arquivo);
-}
-
-
 //                           COMPARA SE EMPRESA EXISTE
 //=======================================================================================================
 int CompareDados(char *nome, char *end_arquivo, Tema t, FILE *arquivo2){// preciso compara empresas pra so deixar criar vaga se ja tiver cad de empresa
@@ -60,7 +47,6 @@ int CompareDados(char *nome, char *end_arquivo, Tema t, FILE *arquivo2){// preci
         printf("Empresa sem cadastro!");
         Sleep(1000);
         fclose(arquivo);
-        //system("pause");
         return 0;
     }
 }
@@ -177,10 +163,7 @@ void PesquisarVaga(Tema t, char *end_arquivo, char *end_arquivo2){
                         return;
                     }
                 }
-                if(menu != 2){
-                    Gotoxy(39, 19);
-                    //system("pause");
-                    Sleep(1000);
+                if(menu == 2){
                     return;
                 }
             }
@@ -190,8 +173,6 @@ void PesquisarVaga(Tema t, char *end_arquivo, char *end_arquivo2){
     Caixa(44, 14 , 30 , 1, 1);
     Gotoxy(46, 15);
     printf("   Empresa n%co encontrada   \n", 198);
-    Gotoxy(39, 19);
-    //system("pause");
     Sleep(1000);
 }
 

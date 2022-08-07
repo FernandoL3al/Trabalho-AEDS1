@@ -104,27 +104,47 @@ void TipoCursor(int cursor){
 }
 
 
-//                                  CARREGADOR DE DADOS INICIAIS
-//===========================================================================================================
-void DadosLoad(FILE *arquivo, FILE *arquivo1, FILE *arquivo2){
-        arquivo = fopen("empresas.txt", "rb+");
-        if(arquivo == NULL){
-            Default(arquivo, 1);
-            arquivo = fopen("empresas.txt", "rb+");
-        }
-        arquivo1 = fopen("pessoas.txt", "rb+");
-        if(arquivo1 == NULL){
-            Default(arquivo1, 2);
-            arquivo1 = fopen("pessoas.txt", "rb+");
-        }
-        arquivo2 = fopen("vagas.txt", "rb+");
-        if(arquivo2 == NULL){
-            DefaultVaga(arquivo2);
-            arquivo2 = fopen("vagas.txt", "rb+");
-        }
-        fclose(arquivo); fclose(arquivo1); fclose(arquivo2); 
-}
+//                          CRIACAO DE ARQUIVOS DE DADOS INICIAIS
+//=====================================================================================================
+void Default(FILE *arq_empresa, FILE *arq_pessoa, FILE *arq_vaga){
+    arq_empresa = fopen("empresas.txt", "rb+");
+    if(arq_empresa == NULL){
+        arq_empresa = fopen("empresas.txt", "wb");
+        Cliente defaul[] = {{ .Codigo = 023, .Nome = "Microloft", .Telefone = "1374-75701", .Senha = "12345" },
+                            { .Codigo = 233, .Nome = "Kabaum", .Telefone = "53056-9436", .Senha = "12345"},
+                            { .Codigo = 453, .Nome = "Groogue", .Telefone = "1958-544", .Senha = "12345"}};
+        fseek(arq_empresa, 0, SEEK_SET);
+        fwrite(defaul, sizeof(Cliente), 3, arq_empresa);
+        fclose(arq_empresa);
+        arq_empresa = fopen("empresas.txt", "rb+");
+    }
 
+    arq_pessoa = fopen("pessoas.txt", "rb+");
+    if(arq_pessoa == NULL){
+        arq_pessoa = fopen("pessoas.txt", "wb");
+        Cliente defaul2[] = {{ .Codigo = 103, .Nome = "Barbara", .Telefone = "0899-4456", .Senha = "12345"},
+                            { .Codigo = 13, .Nome = "Lulosvaldo", .Telefone = "131313-1313", .Senha = "12345"},
+                            { .Codigo = 22, .Nome = "Jao Bozonaro", .Telefone = "222222-222", .Senha = "12345" }};
+        fseek(arq_pessoa, 0, SEEK_SET);
+        fwrite(defaul2, sizeof(Cliente), 3, arq_pessoa);
+        fclose(arq_pessoa);
+        arq_pessoa = fopen("pessoas.txt", "rb+");
+    }
+
+    arq_vaga = fopen("vagas.txt", "rb+");
+    if(arq_vaga == NULL){
+        arq_vaga = fopen("vagas.txt", "wb");
+        Vaga defaul3[] = {{.Empresa = "Microloft", .Area = "TI", .NomeVaga = "Suporte Tecnico S.O.", .Salario = 1500.00, .Disponivel = 1},
+                            {.Empresa = "Kabaum", .Area = "Vendas", .NomeVaga = "Vendedor Online", .Salario = 1900.00, .Disponivel = 1},
+                            {.Empresa = "Groogue", .Area = "TI", .NomeVaga = "Desenvolvedor C", .Salario = 400.00, .Disponivel = 1}};
+        fseek(arq_vaga, 0, SEEK_SET);
+        fwrite(defaul3, sizeof(Vaga), 3, arq_vaga);
+        fclose(arq_vaga);
+        arq_vaga = fopen("vagas.txt", "rb+");
+    }
+    
+    fclose(arq_empresa); fclose(arq_pessoa); fclose(arq_vaga);
+}
 
 
 //          CARREGADOR E CRIADOR DE ARQUIVO TEMAS.TXT

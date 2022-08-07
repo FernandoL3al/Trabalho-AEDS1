@@ -12,19 +12,18 @@ typedef struct{
     char linked[51];
 }Vaga;
 
+
+//                    FUNCOES
+//=================================================================================
 void AplicarVaga(Tema t);
 
 void AtivarVaga(FILE *arquivo, Tema t, int escolha, char *end_arquivo);
-
-void DefaultVaga(FILE *arquivo);
 
 void ReprintTela();
 
 int CompareDados(char *nome, char *end_arquivo, Tema t, FILE *arquivo2);
 
 void CriarVaga(Tema t, Vaga *C, FILE *arquivo, FILE *arquivo2);
-
-void DefaultVaga(FILE *arquivo);
 
 void ListarVagas(Vaga vetor[], int Quantidade, Tema t);
 
